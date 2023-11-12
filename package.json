@@ -1,6 +1,6 @@
 {
   "name": "SEA-Blog-Admin",
-  "description": "",
+  "description": "SEA-Blog博客项目的管理后台。",
   "version": "1.0.0",
   "author": "SEA <whm360735@163.com>",
   "scripts": {
