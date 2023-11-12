@@ -1,0 +1,39 @@
+name: syncToGitee
+on:
+  push:
+    branches:
+      - main #Github仓库分支名称
+jobs:
+  repo-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up SSH key # 1.设置SSH私钥
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H gitee.com >> ~/.ssh/known_hosts
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Check loaded SSH key # 2.检查SSH私钥是否设置成功
+        run: |
+          cat ~/.ssh/id_rsa
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
+
+      - name: Test SSH connection # 3.测试通过该私钥是否能够访问Gitee
+        run: ssh -vT git@gitee.com
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
+
+      - name: Mirror to Gitee. # 4.将Github仓库镜像至Gitee
+        uses: Yikun/hub-mirror-action@master
+        with:
+          src: 'github/SEA-365'
+          dst: 'gitee/SEA-365'
+          dst_key: ${{ secrets.SSH_PRIVATE_KEY }}
+          dst_token:  ${{ secrets.GITEE_TOKEN }}
+          static_list: "SEA-Blog-Admin"
