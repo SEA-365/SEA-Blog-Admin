@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function login(data) {
   return request({
-    url: '/sea-blog-admin/user/login',
+    url: '/users/login', // 登录请求路径
     method: 'post',
     data
   })
@@ -10,7 +10,7 @@ export function login(data) {
 
 export function getInfo(token) {
   return request({
-    url: '/sea-blog-admin/user/info',
+    url: '/users/info',
     method: 'get',
     params: { token }
   })
@@ -18,7 +18,7 @@ export function getInfo(token) {
 
 export function logout() {
   return request({
-    url: '/sea-blog-admin/user/logout',
+    url: '/users/logout',
     method: 'post'
   })
 }

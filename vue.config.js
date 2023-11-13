@@ -6,14 +6,14 @@ function resolve(dir) {
   return path.join(__dirname, dir)
 }
 
-const name = defaultSettings.title || 'vue Admin Template' // page title
+const name = defaultSettings.title || 'SEA-Blog Admin' // page title
 
 // If your port is set to 80,
 // use administrator privileges to execute the command line.
 // For example, Mac: sudo npm run
 // You can change the port by the following methods:
 // port = 9528 npm run dev OR npm run dev --port = 9528
-const port = process.env.port || process.env.npm_config_port || 9528 // dev port
+const port = process.env.port || process.env.npm_config_port || 7070 // dev port
 
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
@@ -25,20 +25,21 @@ module.exports = {
    * Detail: https://cli.vuejs.org/config/#publicpath
    */
   publicPath: '/',
-  outputDir: 'dist',
-  assetsDir: 'static',
-  lintOnSave: process.env.NODE_ENV === 'development',
-  productionSourceMap: false,
-  devServer: {
-    port: port,
-    open: true,
+  outputDir: 'dist', // 项目打包后的输出目录
+  assetsDir: 'static', // 静态资源输出目录
+  lintOnSave: process.env.NODE_ENV === 'development', // 是否在开发环境下启动ESLint检查
+  productionSourceMap: false, // 是否在生产环境下生成源映射文件
+  devServer: { // 开发服务器的配置选项
+    port: port, // 指定开发服务器的端口号
+    open: true, // 启动开发服务器时是否自动打开浏览器
     overlay: {
       warnings: false,
       errors: true
-    },
-    before: require('./mock/mock-server.js')
+    }
+    // 删除mock服务器的引用
+    // before: require('./mock/mock-server.js')
   },
-  configureWebpack: {
+  configureWebpack: { // 对Webpack进行额外的配置，可以在这里添加自定义的Webpack配置项
     // provide the app's title in webpack's name field, so that
     // it can be accessed in index.html to inject the correct title.
     name: name,
