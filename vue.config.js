@@ -31,7 +31,7 @@ module.exports = {
   productionSourceMap: false, // 是否在生产环境下生成源映射文件
   devServer: { // 开发服务器的配置选项
     port: port, // 指定开发服务器的端口号
-    open: true, // 启动开发服务器时是否自动打开浏览器
+    open: false, // 启动开发服务器时是否自动打开浏览器
     overlay: {
       warnings: false,
       errors: true
