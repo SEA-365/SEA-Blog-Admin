@@ -10,7 +10,7 @@ export function login(data) {
 
 export function getInfo(token) {
   return request({
-    url: '/users/info',
+    url: '/users/info', // 获取用户信息
     method: 'get',
     params: { token }
   })
