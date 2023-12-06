@@ -31,13 +31,17 @@ const mutations = {
   }
 }
 
+const TAG = '====sea====user.js====> '
+
 const actions = {
   // user login
   login({ commit }, userInfo) {
+    console.log(TAG + 'login() --> userInfo:' + JSON.stringify(userInfo))
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
         const { data } = response // 请求后端登录接口成功后返回的响应数据
+        console.log(TAG + 'login() --> data:' + JSON.stringify(data))
         commit('SET_TOKEN', data.token) // 将token保存到VueX(一个专门用于状态管理的库)
         setToken(data.token) // 将token保存到本地存储
         resolve() // 表示Promise成功执行

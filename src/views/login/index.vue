@@ -133,8 +133,10 @@ export default {
       })
     },
     handleLogin() {
+      const TAG = '=====sea=====>handleLogin()====>'
       this.$refs.loginForm.validate(valid => {
         if (valid) {
+          console.log(TAG + 'validate()')
           this.loading = true
           this.$store.dispatch('user/login', this.loginForm).then(() => {
             this.$router.push({ path: this.redirect || '/' })
