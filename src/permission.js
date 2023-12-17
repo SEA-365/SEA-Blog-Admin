@@ -10,7 +10,7 @@ NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
 const whiteList = ['/login'] // no redirect whitelist
 
-const TAG = '====sea====>permission.js====> '
+const TAG = '====sea====>src/permission.js====> '
 
 router.beforeEach(async(to, from, next) => {
   // start progress bar
@@ -31,8 +31,9 @@ router.beforeEach(async(to, from, next) => {
     } else {
       // determine whether the user has obtained his permission roles through getInfo
       const hasRoles = store.getters.roles && store.getters.roles.length > 0
-      console.log(TAG + 'hasRoles:' + JSON.stringify(hasRoles) + 'roles: ' + store.getters.roles)
+      console.log(TAG + 'hasRoles:' + JSON.stringify(hasRoles) + '   roles: ' + JSON.stringify(store.getters.roles))
       if (hasRoles) {
+        console.log(TAG + 'hasRoles: true')
         next()
       } else {
         try {
@@ -40,11 +41,11 @@ router.beforeEach(async(to, from, next) => {
           // note: roles must be a object array! such as: ['admin'] or ,['developer','editor']
           // 如果用户没有权限信息，需要访问后端接口获取相关信息
           const { roles } = await store.dispatch('user/getInfo')
+          console.log(TAG + ' roles: ' + JSON.stringify(roles))
 
           // generate accessible routes map based on roles
           const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
-
-          console.log(TAG + ' roles: ' + JSON.stringify(roles) + ' accessRoutes: ' + accessRoutes)
+          console.log(TAG + ' accessRoutes: ' + accessRoutes)
 
           // dynamically add accessible routes
           router.addRoutes(accessRoutes)
@@ -53,6 +54,7 @@ router.beforeEach(async(to, from, next) => {
           // set the replace: true, so the navigation will not leave a history record
           next({ ...to, replace: true })
         } catch (error) {
+          console.log(TAG + '  error: ' + error)
           // remove token and go to login page to re-login
           await store.dispatch('user/resetToken')
           Message.error(error || 'Has Error')

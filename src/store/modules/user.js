@@ -1,6 +1,7 @@
 import { login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
+import da from "element-ui/src/locale/lang/da";
 
 const getDefaultState = () => {
   return {
@@ -56,6 +57,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       getInfo(state.token).then(response => {
         const { data } = response
+        console.log(TAG + 'data: ' + JSON.stringify(data))
 
         if (!data) {
           reject('Verification failed, please Login again.')
@@ -65,6 +67,7 @@ const actions = {
 
         // roles must be a non-empty array
         if (!roles || roles.length <= 0) {
+          console.log(TAG + 'roles: ' + JSON.stringify(roles) + '  roles.length: ' + roles.length)
           reject('getInfo: roles must be a non-null array!')
         }
 
@@ -72,7 +75,9 @@ const actions = {
         commit('SET_NAME', name)
         commit('SET_AVATAR', avatar)
         resolve(data)
+        console.log(TAG + ' getInfo成功！')
       }).catch(error => {
+        console.log(TAG + ' getInfo出现异常！')
         reject(error)
       })
     })
