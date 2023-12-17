@@ -1,12 +1,11 @@
 import { login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
-import da from "element-ui/src/locale/lang/da";
 
 const getDefaultState = () => {
   return {
     token: getToken(),
-    name: '',
+    username: '',
     avatar: '',
     roles: []
   }
@@ -21,8 +20,8 @@ const mutations = {
   SET_TOKEN: (state, token) => {
     state.token = token
   },
-  SET_NAME: (state, name) => {
-    state.name = name
+  SET_USERNAME: (state, username) => {
+    state.username = username
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
@@ -63,7 +62,7 @@ const actions = {
           reject('Verification failed, please Login again.')
         }
 
-        const { roles, name, avatar } = data
+        const { roles, username, avatar } = data
 
         // roles must be a non-empty array
         if (!roles || roles.length <= 0) {
@@ -72,7 +71,7 @@ const actions = {
         }
 
         commit('SET_ROLES', roles)
-        commit('SET_NAME', name)
+        commit('SET_USERNAME', username)
         commit('SET_AVATAR', avatar)
         resolve(data)
         console.log(TAG + ' getInfo成功！')
