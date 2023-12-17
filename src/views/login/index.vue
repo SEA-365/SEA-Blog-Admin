@@ -139,6 +139,10 @@ export default {
           console.log(TAG + 'validate()')
           this.loading = true
           this.$store.dispatch('user/login', this.loginForm).then(() => {
+            // 保存用户信息到本地存储
+            console.log(TAG + 'username: ' + this.loginForm.username)
+            console.log(TAG + 'this.$store.state.user：' + JSON.stringify(this.$store.state.user))
+            // 重定向到指定地址或默认地址
             this.$router.push({ path: this.redirect || '/' })
             this.loading = false
           }).catch(() => {
