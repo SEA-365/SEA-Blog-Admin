@@ -21,6 +21,7 @@ service.interceptors.request.use(
       // let each request carry token
       // ['X-Token'] is a custom headers key
       // please modify it according to the actual situation
+      // 设置每次请求都把token带上
       config.headers['Authorization'] = getToken()
     }
     return config
