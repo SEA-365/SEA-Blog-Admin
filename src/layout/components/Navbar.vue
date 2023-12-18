@@ -36,6 +36,8 @@ import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 
+const TAG = '====sea====Navbar.vue====> '
+
 export default {
   components: {
     Breadcrumb,
@@ -53,6 +55,7 @@ export default {
     },
     async logout() {
       await this.$store.dispatch('user/logout')
+      console.log(TAG + 'this.$route.fullPath: ' + JSON.stringify(this.$route.fullPath))
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     }
   }

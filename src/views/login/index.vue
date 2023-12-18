@@ -145,18 +145,20 @@ export default {
             // 重定向到指定地址或默认地址
             this.$router.push({ path: this.redirect || '/' })
             this.loading = false
-          }).catch(() => {
+          }).catch(error => {
+            // 登录失败逻辑
+            console.error(TAG + 'Login failed:', error.message)
+            this.$notify.error({
+              title: '登录失败！',
+              message: error.message || '未知错误，请重试。'
+            })
+          }).finally(() => {
             this.loading = false
           })
         } else {
           console.log('error submit!!')
           return false
         }
-      })
-      // 增加登录未成功提示
-      this.$notify.error({
-        title: '登录未成功！',
-        message: '请输入正确的用户名或密码！'
       })
     }
   }

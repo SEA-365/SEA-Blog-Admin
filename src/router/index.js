@@ -24,7 +24,7 @@ import Layout from '@/layout'
     activeMenu: '/example/list'  if set path, the sidebar will highlight the path you set
   }
  */
-
+const TAG = '====sea====>router/index.js====> '
 /**
  * constantRoutes
  * a base page that does not have permission requirements
@@ -179,6 +179,7 @@ const router = createRouter()
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
+  console.log(TAG + ' resetRouter')
   const newRouter = createRouter()
   router.matcher = newRouter.matcher // reset router
 }

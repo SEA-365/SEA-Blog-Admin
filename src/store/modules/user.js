@@ -31,7 +31,7 @@ const mutations = {
   }
 }
 
-const TAG = '====sea====user.js====> '
+const TAG = '====sea====/modules/user.js====> '
 
 const actions = {
   // user login
@@ -85,12 +85,14 @@ const actions = {
   // user logout
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {
-      logout(state.token).then(() => {
+      logout(state.token).then(response => {
+        console.log(TAG + 'response: ' + JSON.stringify(response))
         removeToken() // must remove  token  first
         resetRouter()
         commit('RESET_STATE')
         resolve()
       }).catch(error => {
+        console.log(TAG + 'error: ' + JSON.stringify(error))
         reject(error)
       })
     })
