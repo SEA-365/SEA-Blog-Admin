@@ -71,7 +71,7 @@ export const constantRoutes = [
       {
         path: 'loginlog',
         name: 'LoginLogList',
-        component: () => import('@/views/operation/loginlog.vue'),
+        component: () => import('@/views/operation/loginlog'),
         meta: { title: '登录日志', icon: '' }
       }
     ]
@@ -93,7 +93,113 @@ export const constantRoutes = [
         noCache: true // 不会被 <keep-alive> 缓存
       }
     ]
-  }
+  },
+  {
+    path: '/user',
+    component: Layout,
+    redirect: '/user/list',
+    name: 'User',
+    meta: {title: '用户管理', icon: 'user'},
+    children: [
+      {
+        path: 'list',
+        name: 'UserList',
+        component: () => import('@/views/user/list'),
+        meta: {title: '用户列表', icon: 'user'}
+      },
+      {
+        path: 'introduction',
+        name: 'UserIntroduction',
+        component: () => import('@/views/user/introduction'),
+        meta: {title: '个人介绍', icon: 'introduction'}
+      },
+    ]
+  },
+  {
+    path: '/tag',
+    component: Layout,
+    redirect: '/tag/list',
+    name: 'Tag',
+    meta: {title: '标签管理', icon: 'tag_icon'},
+    children: [
+      {
+        path: 'list',
+        name: 'TagList',
+        component: () => import('@/views/tag/list'),
+        meta: {title: '标签列表', icon: 'tag_icon'}
+      },
+      {
+        path: 'add',
+        name: 'TagAdd',
+        component: () => import('@/views/tag/add'),
+        meta: {title: '新增标签', icon: 'add_icon'}
+      }
+    ]
+  },
+  {
+    path: '/category',
+    component: Layout,
+    redirect: '/category/list',
+    name: 'Category',
+    meta: {title: '分类管理', icon: 'category_icon'},
+    children: [
+      {
+        path: 'list',
+        name: 'CategoryList',
+        component: () => import('@/views/category/list'),
+        meta: {title: '分类列表', icon: 'category_icon'}
+      },
+      {
+        path: 'add',
+        name: 'CategoryAdd',
+        component: () => import('@/views/category/add'),
+        meta: {title: '新增分类', icon: 'add_icon'}
+      }
+    ]
+  },
+  {
+    path: '/comment',
+    component: Layout,
+    redirect: '/comment/list',
+    name: 'Comment',
+    meta: {title: '评论管理', icon: 'comment_icon'},
+    children: [
+      {
+        path: 'list',
+        name: 'CommentList',
+        component: () => import('@/views/comment/list'),
+        meta: {title: '评论列表', icon: 'comment_icon'}
+      },
+      {
+        path: 'add',
+        name: 'CommentAdd',
+        component: () => import('@/views/comment/list'),
+        meta: {title: '发布评论', icon: 'add_icon'}
+      }
+    ]
+  },
+  {
+    path: '/article',
+    component: Layout,
+    redirect: '/article/list',
+    name: 'Article',
+    meta: {title: '文章管理', icon: 'articleList_icon'},
+    children: [
+      {
+        path: 'list',
+        name: 'ArticleList',
+        component: () => import('@/views/article/list'),
+        meta: {title: '文章列表', icon: 'articleList_icon'}
+      },
+      {
+        path: 'add',
+        name: 'ArticleAdd',
+        component: () => import('@/views/article/add'),
+        meta: {title: '发布文章', icon: 'articleAdd_icon'}
+      }
+    ]
+  },
+
 ]
 
 /**
@@ -101,74 +207,63 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
-  {
-    path: '/nested',
-    component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
-    meta: {
-      title: 'Nested',
-      icon: 'nested'
-    },
-    children: [
-      {
-        path: 'menu1',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'Menu1',
-        meta: { title: 'Menu1' },
-        children: [
-          {
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: { title: 'Menu1-1' }
-          },
-          {
-            path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'Menu1-2',
-            meta: { title: 'Menu1-2' },
-            children: [
-              {
-                path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'Menu1-2-1',
-                meta: { title: 'Menu1-2-1' }
-              },
-              {
-                path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'Menu1-2-2',
-                meta: { title: 'Menu1-2-2' }
-              }
-            ]
-          },
-          {
-            path: 'menu1-3',
-            component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'Menu1-3',
-            meta: { title: 'Menu1-3' }
-          }
-        ]
-      },
-      {
-        path: 'menu2',
-        component: () => import('@/views/nested/menu2/index'),
-        meta: { title: 'menu2' }
-      }
-    ]
-  },
-
-  {
-    path: 'external-link',
-    component: Layout,
-    children: [
-      {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
-      }
-    ]
-  },
+  // {
+  //   path: '/nested',
+  //   component: Layout,
+  //   redirect: '/nested/menu1',
+  //   name: 'Nested',
+  //   meta: {
+  //     title: 'Nested',
+  //     icon: 'nested'
+  //   },
+  //   children: [
+  //     {
+  //       path: 'menu1',
+  //       component: () => import('@/views/nested/menu1/index'), // Parent router-view
+  //       name: 'Menu1',
+  //       meta: { title: 'Menu1' },
+  //       children: [
+  //         {
+  //           path: 'menu1-1',
+  //           component: () => import('@/views/nested/menu1/menu1-1'),
+  //           name: 'Menu1-1',
+  //           meta: { title: 'Menu1-1' }
+  //         },
+  //         {
+  //           path: 'menu1-2',
+  //           component: () => import('@/views/nested/menu1/menu1-2'),
+  //           name: 'Menu1-2',
+  //           meta: { title: 'Menu1-2' },
+  //           children: [
+  //             {
+  //               path: 'menu1-2-1',
+  //               component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
+  //               name: 'Menu1-2-1',
+  //               meta: { title: 'Menu1-2-1' }
+  //             },
+  //             {
+  //               path: 'menu1-2-2',
+  //               component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
+  //               name: 'Menu1-2-2',
+  //               meta: { title: 'Menu1-2-2' }
+  //             }
+  //           ]
+  //         },
+  //         {
+  //           path: 'menu1-3',
+  //           component: () => import('@/views/nested/menu1/menu1-3'),
+  //           name: 'Menu1-3',
+  //           meta: { title: 'Menu1-3' }
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       path: 'menu2',
+  //       component: () => import('@/views/nested/menu2/index'),
+  //       meta: { title: 'menu2' }
+  //     }
+  //   ]
+  // },
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
