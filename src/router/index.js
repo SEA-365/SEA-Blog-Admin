@@ -51,41 +51,46 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      meta: { title: '控制台', icon: 'dashboard' }
     }]
   },
 
   {
-    path: '/example',
+    path: '/operation',
     component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'el-icon-s-help' },
+    redirect: '/operation/list',
+    name: 'Operation',
+    meta: { title: '日志中心', icon: 'operationlog' },
     children: [
       {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
+        path: 'list',
+        name: 'OperationList',
+        component: () => import('@/views/operation/index'),
+        meta: { title: '操作日志', icon: '' }
       },
       {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
+        path: 'loginlog',
+        name: 'LoginLogList',
+        component: () => import('@/views/operation/loginlog.vue'),
+        meta: { title: '登录日志', icon: '' }
       }
     ]
   },
 
   {
-    path: '/form',
+    path: '/permission',
     component: Layout,
+    redirect: '/permission/index', // 重定向地址
+    hidden: true, // 不在侧边栏显示
+    alwaysShow: true, // 一直显示根路由
+    meta: { roles: ['admin', 'editor'] }, // 你可以在根路由设置权限，这样它下面所有的子路由都继承了这个权限
     children: [
       {
         path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
+        name: 'permission',
+        icon: 'permission_user',
+        roles: ['admin', 'editor'], // 或者你可以给每一个子路由设置自己的权限
+        noCache: true // 不会被 <keep-alive> 缓存
       }
     ]
   }
