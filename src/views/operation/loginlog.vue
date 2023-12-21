@@ -45,8 +45,8 @@
 
       <el-table-column align="center" label="登录状态">
         <template slot-scope="scope">
-          <el-tag :type="tagType(scope.row.operationType)">
-            {{ scope.row.loginStatus }}
+          <el-tag :type="tagType(scope.row.loginStatus)">
+            {{ map[scope.row.loginStatus ] }}
           </el-tag>
         </template>
       </el-table-column>
@@ -94,6 +94,10 @@ export default {
       listQuery: {
         pageNum: 1,
         pageSize: 10
+      },
+      map: {
+        0: '登录成功',
+        1: '登录失败'
       }
     }
   },
