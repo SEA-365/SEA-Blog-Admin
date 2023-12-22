@@ -66,13 +66,13 @@ export const constantRoutes = [
         path: 'list',
         name: 'OperationList',
         component: () => import('@/views/operation/index'),
-        meta: { title: '操作日志', icon: '' }
+        meta: { title: '操作日志', icon: 'caozuo' }
       },
       {
         path: 'loginlog',
         name: 'LoginLogList',
         component: () => import('@/views/operation/loginlog'),
-        meta: { title: '登录日志', icon: '' }
+        meta: { title: '登录日志', icon: 'denglu' }
       }
     ]
   },

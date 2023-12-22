@@ -23,7 +23,7 @@ export function logout() {
   })
 }
 
-export function getUserList(query) {
+export function getUserList() {
   return request({
     url: '/users',
     method: 'get'
@@ -56,7 +56,7 @@ export function updateUser(data) {
 
 export function deleteUserById(id) {
   return request({
-    url: '/users/${id}',
+    url: `/users/${id}`,
     method: 'delete',
     params: { id }
   })
