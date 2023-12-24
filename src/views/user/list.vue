@@ -81,6 +81,7 @@
 
     </el-table>
 
+    <!-- 分页 -->
     <el-pagination
       class="pagination-container"
       background
@@ -134,6 +135,7 @@
 <script>
 import { getUserList, getUserById, deleteUserById, updateUser, addUser} from "@/api/user";
 
+const TAG = "====sea====> user/list.vue ====> "
 
 export default {
   name: 'UserList',
@@ -168,8 +170,9 @@ export default {
     userList(){
       this.listLoading = true
       var body = this.listQuery
-      getUserList(body).then(response => {
-        this.list = response.data
+      getUserList({ body }).then(response => {
+        console.log(TAG + " response: " + JSON.stringify(response))
+        this.list = response.data.result
         this.count = response.data.totalSize
         this.listLoading = false
       })

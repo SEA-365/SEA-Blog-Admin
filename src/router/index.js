@@ -130,9 +130,9 @@ export const constantRoutes = [
       },
       {
         path: 'add',
-        name: 'TagAdd',
-        component: () => import('@/views/tag/add'),
-        meta: {title: '新增标签', icon: 'add_icon'}
+        name: 'TagIntroduction',
+        component: () => import('@/views/tag/introduction.vue'),
+        meta: {title: '标签模块介绍', icon: 'add_icon'}
       }
     ]
   },
@@ -150,10 +150,10 @@ export const constantRoutes = [
         meta: {title: '分类列表', icon: 'category_icon'}
       },
       {
-        path: 'add',
-        name: 'CategoryAdd',
-        component: () => import('@/views/category/add'),
-        meta: {title: '新增分类', icon: 'add_icon'}
+        path: 'introduction',
+        name: 'CategoryIntroduction',
+        component: () => import('@/views/category/introduction.vue'),
+        meta: {title: '分类模块介绍', icon: 'add_icon'}
       }
     ]
   },
@@ -171,10 +171,10 @@ export const constantRoutes = [
         meta: {title: '评论列表', icon: 'comment_icon'}
       },
       {
-        path: 'add',
-        name: 'CommentAdd',
-        component: () => import('@/views/comment/list'),
-        meta: {title: '发布评论', icon: 'add_icon'}
+        path: 'introduction',
+        name: 'CommentIntroduction',
+        component: () => import('@/views/comment/introduction.vue'),
+        meta: {title: '评论模块介绍', icon: 'add_icon'}
       }
     ]
   },
@@ -192,10 +192,10 @@ export const constantRoutes = [
         meta: {title: '文章列表', icon: 'articleList_icon'}
       },
       {
-        path: 'add',
-        name: 'ArticleAdd',
-        component: () => import('@/views/article/add'),
-        meta: {title: '发布文章', icon: 'articleAdd_icon'}
+        path: 'introduction',
+        name: 'ArticleIntroduction',
+        component: () => import('@/views/article/introduction.vue'),
+        meta: {title: '文章模块介绍', icon: 'articleAdd_icon'}
       }
     ]
   },
