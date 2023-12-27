@@ -213,10 +213,10 @@ export const constantRoutes = [
         meta: {title: '公告列表', icon: 'noticeList_icon'}
       },
       {
-        path: 'introduction',
-        name: 'NoticeIntroduction',
-        component: () => import('@/views/notice/introduction.vue'),
-        meta: {title: '公告模块介绍', icon: 'add_icon'}
+        path: 'add',
+        name: 'NoticeAdd',
+        component: () => import('@/views/notice/add.vue'),
+        meta: {title: '发布公告', icon: 'add_icon'}
       }
     ]
   },

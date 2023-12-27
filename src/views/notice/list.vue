@@ -1,15 +1,6 @@
 <template>
   <el-card class="box-card">
 
-    <el-button
-      type="primary"
-      size="small"
-      icon="el-icon-plus"
-      @click="openModel(null)"
-    >
-      新增
-    </el-button>
-
     <el-table v-loading="listLoading" :data="list" fit highlight-current-row style="width: 98%; margin-top:30px;">
       <el-table-column align="center" label="ID" >
         <template slot-scope="scope">
@@ -65,12 +56,12 @@
       </el-table-column>
 
 
-      <el-table-column align="center" label="操作" width="180">
-        <template slot-scope="scope">
-          <el-button type="primary" size="mini" icon="el-icon-edit"  @click="openModel(scope.row)">编辑</el-button>
-          <el-button type="danger" size="small" icon="el-icon-delete" @click="deleteNotice(scope.row.id)">删除</el-button>
-        </template>
-      </el-table-column>
+<!--      <el-table-column align="center" label="操作" width="180">-->
+<!--        <template slot-scope="scope">-->
+<!--          <el-button type="primary" size="mini" icon="el-icon-edit"  @click="openModel(scope.row)">编辑</el-button>-->
+<!--          <el-button type="danger" size="small" icon="el-icon-delete" @click="deleteNotice(scope.row.id)">删除</el-button>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
 
 
     </el-table>
@@ -89,57 +80,57 @@
     />
 
 
-    <!-- 添加/编辑对话框 -->
-    <el-dialog :visible.sync="addOrUpdateDialogVisible" width="30%">
-      <div class="dialog-title-container" slot="title" ref="noticeTitle" />
-      <el-form label-width="80px" size="medium" :model="noticeForm">
-        <el-form-item label="id">
-          <el-input v-model="noticeForm.id" style="width:80%" />
-        </el-form-item>
+<!--    &lt;!&ndash; 添加/编辑对话框 &ndash;&gt;-->
+<!--    <el-dialog :visible.sync="addOrUpdateDialogVisible" width="30%">-->
+<!--      <div class="dialog-title-container" slot="title" ref="noticeTitle" />-->
+<!--      <el-form label-width="80px" size="medium" :model="noticeForm">-->
+<!--        <el-form-item label="id">-->
+<!--          <el-input v-model="noticeForm.id" style="width:80%" />-->
+<!--        </el-form-item>-->
 
-      </el-form>
+<!--      </el-form>-->
 
-      <el-form label-width="80px" size="medium" :model="noticeForm">
-        <el-form-item label="公告标题">
-          <el-input v-model="noticeForm.noticeTitle" style="width:80%" />
-        </el-form-item>
+<!--      <el-form label-width="80px" size="medium" :model="noticeForm">-->
+<!--        <el-form-item label="公告标题">-->
+<!--          <el-input v-model="noticeForm.noticeTitle" style="width:80%" />-->
+<!--        </el-form-item>-->
 
-      </el-form>
+<!--      </el-form>-->
 
-      <el-form label-width="80px" size="medium" :model="noticeForm">
-        <el-form-item label="公告类型">
-          <el-input v-model="noticeForm.noticeType" style="width:80%" />
-        </el-form-item>
+<!--      <el-form label-width="80px" size="medium" :model="noticeForm">-->
+<!--        <el-form-item label="公告类型">-->
+<!--          <el-input v-model="noticeForm.noticeType" style="width:80%" />-->
+<!--        </el-form-item>-->
 
-      </el-form>
+<!--      </el-form>-->
 
-      <el-form label-width="80px" size="medium" :model="noticeForm">
-        <el-form-item label="公告状态">
-          <el-input v-model="noticeForm.noticeStatus" style="width:80%" />
-        </el-form-item>
+<!--      <el-form label-width="80px" size="medium" :model="noticeForm">-->
+<!--        <el-form-item label="公告状态">-->
+<!--          <el-input v-model="noticeForm.noticeStatus" style="width:80%" />-->
+<!--        </el-form-item>-->
 
-      </el-form>
+<!--      </el-form>-->
 
-      <el-form label-width="80px" size="medium" :model="noticeForm">
-        <el-form-item label="公告内容">
-          <el-input v-model="noticeForm.noticeContent" style="width:80%" />
-        </el-form-item>
+<!--      <el-form label-width="80px" size="medium" :model="noticeForm">-->
+<!--        <el-form-item label="公告内容">-->
+<!--          <el-input v-model="noticeForm.noticeContent" style="width:80%" />-->
+<!--        </el-form-item>-->
 
-      </el-form>
+<!--      </el-form>-->
 
-      <el-form label-width="80px" size="medium" :model="noticeForm">
-        <el-form-item label="创建者">
-          <el-input v-model="noticeForm.creator" style="width:80%" />
-        </el-form-item>
+<!--      <el-form label-width="80px" size="medium" :model="noticeForm">-->
+<!--        <el-form-item label="创建者">-->
+<!--          <el-input v-model="noticeForm.creator" style="width:80%" />-->
+<!--        </el-form-item>-->
 
-      </el-form>
-      <div slot="footer">
-        <el-button @click="addOrUpdateDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="addOrEditNotice">
-          确 定
-        </el-button>
-      </div>
-    </el-dialog>
+<!--      </el-form>-->
+<!--      <div slot="footer">-->
+<!--        <el-button @click="addOrUpdateDialogVisible = false">取 消</el-button>-->
+<!--        <el-button type="primary" @click="addOrEditNotice">-->
+<!--          确 定-->
+<!--        </el-button>-->
+<!--      </div>-->
+<!--    </el-dialog>-->
 
   </el-card>
 </template>
