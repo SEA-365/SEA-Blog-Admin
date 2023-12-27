@@ -76,7 +76,6 @@ export default {
         creator: ''
       },
       user: {
-        // 假设用户信息保存在这里
         username: '当前登录用户名',
         // 其他用户信息...
       },
