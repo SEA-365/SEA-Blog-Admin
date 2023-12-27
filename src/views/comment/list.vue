@@ -70,7 +70,7 @@
 
       <el-table-column align="center" label="操作" width="180">
         <template slot-scope="scope">
-          <el-button type="primary" size="mini" icon="el-icon-edit" @click="openModel(scope.row)">编辑</el-button>
+          <el-button type="primary" size="mini" icon="el-icon-edit" @click="openModel(scope.row)" :disabled="true" plain>编辑</el-button>
           <el-button type="danger" size="small" icon="el-icon-delete" @click="deleteComment(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>
@@ -97,38 +97,38 @@
       <div class="dialog-title-container" slot="title" ref="commentTitle" />
       <el-form label-width="80px" size="medium" :model="commentForm">
         <el-form-item label="评论id">
-          <el-input v-model="commentForm.id" style="width:220px" />
+          <el-input v-model="commentForm.id" style="width:80%" />
         </el-form-item>
 
         <el-form-item label="文章id">
-          <el-input v-model="commentForm.articleId" style="width:220px" />
+          <el-input v-model="commentForm.articleId" style="width:80%" />
         </el-form-item>
 
         <el-form-item label="文章作者">
-          <el-input v-model="commentForm.articleAuthor" style="width:220px" />
+          <el-input v-model="commentForm.articleAuthor" style="width:80%" />
         </el-form-item>
 
 
         <el-form-item label="评论创建者id">
-          <el-input v-model="commentForm.commentCreateId" style="width:220px" />
+          <el-input v-model="commentForm.commentCreateId" style="width:80%" />
         </el-form-item>
 
 
         <el-form-item label="被评论回复者id">
-          <el-input v-model="commentForm.commentRelyId" style="width:220px" />
+          <el-input v-model="commentForm.commentRelyId" style="width:80%" />
         </el-form-item>
 
 
         <el-form-item label="评论内容">
-          <el-input v-model="commentForm.commentContent" style="width:220px" />
+          <el-input v-model="commentForm.commentContent" style="width:80%" />
         </el-form-item>
 
         <el-form-item label="是否被删除">
-          <el-input v-model="commentForm.isDelete" style="width:220px" />
+          <el-input v-model="commentForm.isDelete" style="width:80%" />
         </el-form-item>
 
         <el-form-item label="是否通过审核">
-          <el-input v-model="commentForm.isReview" style="width:220px" />
+          <el-input v-model="commentForm.isReview" style="width:80%" />
         </el-form-item>
 
       </el-form>

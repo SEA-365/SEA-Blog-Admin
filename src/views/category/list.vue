@@ -66,11 +66,11 @@
       <div class="dialog-title-container" slot="title" ref="categoryTitle" />
       <el-form label-width="80px" size="medium" :model="categoryForm">
         <el-form-item label="分类id">
-          <el-input v-model="categoryForm.id" style="width:220px" />
+          <el-input v-model="categoryForm.id" style="width:80%" />
         </el-form-item>
 
         <el-form-item label="分类名称">
-          <el-input v-model="categoryForm.categoryName" style="width:220px" />
+          <el-input v-model="categoryForm.categoryName" style="width:80%" />
         </el-form-item>
 
 

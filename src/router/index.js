@@ -195,7 +195,28 @@ export const constantRoutes = [
         path: 'introduction',
         name: 'ArticleIntroduction',
         component: () => import('@/views/article/introduction.vue'),
-        meta: {title: '文章模块介绍', icon: 'articleAdd_icon'}
+        meta: {title: '文章模块介绍', icon: 'add_icon'}
+      }
+    ]
+  },
+  {
+    path: '/notice',
+    component: Layout,
+    redirect: '/notice/list',
+    name: 'Notice',
+    meta: {title: '通知公告管理', icon: 'noticeList_icon'},
+    children: [
+      {
+        path: 'list',
+        name: 'NoticeList',
+        component: () => import('@/views/notice/list'),
+        meta: {title: '公告列表', icon: 'noticeList_icon'}
+      },
+      {
+        path: 'introduction',
+        name: 'NoticeIntroduction',
+        component: () => import('@/views/notice/introduction.vue'),
+        meta: {title: '公告模块介绍', icon: 'add_icon'}
       }
     ]
   },

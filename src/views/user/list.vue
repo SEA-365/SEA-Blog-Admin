@@ -100,25 +100,25 @@
       <div class="dialog-title-container" slot="title" ref="userTitle" />
       <el-form label-width="80px" size="medium" :model="userForm">
         <el-form-item label="用户名">
-          <el-input v-model="userForm.username" style="width:220px" />
+          <el-input v-model="userForm.username" style="width:80%" />
         </el-form-item>
         <el-form-item label="密码">
-          <el-input v-model="userForm.password" style="width:220px" />
+          <el-input v-model="userForm.password" style="width:80%" />
         </el-form-item>
         <el-form-item label="邮箱">
-          <el-input v-model="userForm.email" style="width:220px" />
+          <el-input v-model="userForm.email" style="width:80%" />
         </el-form-item>
         <el-form-item label="手机号">
-          <el-input v-model="userForm.phone" style="width:220px" />
+          <el-input v-model="userForm.phone" style="width:80%" />
         </el-form-item>
         <el-form-item label="性别">
-          <el-input v-model="userForm.gender" style="width:220px" />
+          <el-input v-model="userForm.gender" style="width:80%" />
         </el-form-item>
         <el-form-item label="个人介绍">
-          <el-input v-model="userForm.intro" style="width:220px" />
+          <el-input v-model="userForm.intro" style="width:80%" />
         </el-form-item>
         <el-form-item label="头像url">
-          <el-input v-model="userForm.avatarUrl" style="width:220px" />
+          <el-input v-model="userForm.avatarUrl" style="width:80%" />
         </el-form-item>
 
       </el-form>

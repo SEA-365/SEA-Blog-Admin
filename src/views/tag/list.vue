@@ -65,14 +65,14 @@
       <div class="dialog-title-container" slot="title" ref="tagTitle" />
       <el-form label-width="80px" size="medium" :model="tagForm">
         <el-form-item label="标签id">
-          <el-input v-model="tagForm.id" style="width:220px" />
+          <el-input v-model="tagForm.id" style="width:80%" />
         </el-form-item>
 
       </el-form>
 
       <el-form label-width="80px" size="medium" :model="tagForm">
         <el-form-item label="标签名称">
-          <el-input v-model="tagForm.tagName" style="width:220px" />
+          <el-input v-model="tagForm.tagName" style="width:80%" />
         </el-form-item>
 
       </el-form>
