@@ -91,6 +91,7 @@ export default {
           const { data } = response
 
           this.user.username = data.username;
+          this.notice.creator = data.username;
           console.log(' getInfo成功！')
         }).catch(error => {
           console.log(' getInfo出现异常！')
