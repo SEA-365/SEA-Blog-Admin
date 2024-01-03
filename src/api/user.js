@@ -33,7 +33,7 @@ export function getUserList(query) {
 
 export function getUserById(id) {
   return request({
-    url: '/users/${id}', // 获取指定用户
+    url: `/users/${id}`, // 获取指定用户
     method: 'get',
     params: { id }
   })

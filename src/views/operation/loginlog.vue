@@ -8,43 +8,43 @@
 
     <el-table v-loading="listLoading" :data="list" fit highlight-current-row style="width: 98%; margin-top:30px;">
       <el-table-column align="center" label="ID" >
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ scope.row.id }}</span>
         </template>
       </el-table-column>
 
       <el-table-column align="center" label="登录账号用户名">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ scope.row.loginName}}</span>
         </template>
       </el-table-column>
 
       <el-table-column align="center" label="登录IP地址">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ scope.row.ipAddress}}</span>
         </template>
       </el-table-column>
 
       <el-table-column align="center" label="登录地点">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ scope.row.loginLocation}}</span>
         </template>
       </el-table-column>
 
       <el-table-column align="center" label="浏览器类型">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ scope.row.browserType}}</span>
         </template>
       </el-table-column>
 
       <el-table-column align="center" label="操作系统类型">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ scope.row.os}}</span>
         </template>
       </el-table-column>
 
       <el-table-column align="center" label="登录状态">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-tag :type="tagType(scope.row.loginStatus)">
             {{ map[scope.row.loginStatus ] }}
           </el-tag>
@@ -52,7 +52,7 @@
       </el-table-column>
 
       <el-table-column align="center" label="操作日期">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ scope.row.createTime}}</span>
         </template>
       </el-table-column>

@@ -10,7 +10,7 @@ export function getArticleList(query) {
 
 export function getArticleById(id) {
   return request({
-    url: '/articles/${id}', // 获取指定文章
+    url: `/articles/${id}`, // 获取指定文章
     method: 'get',
     params: { id }
   })
@@ -33,10 +33,12 @@ export function updateArticle(data) {
 }
 
 export function deleteArticleById(id) {
+
   return request({
-    url: `/articles/${id}`,  // 删除指定文章
+    url: '/articles/logic',  // 删除指定文章
     method: 'delete',
-    params: { id }
+    data: [id],
+    headers: { 'Content-Type': 'application/json' },  // 设置请求头
   })
 }
 

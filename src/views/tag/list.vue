@@ -12,32 +12,32 @@
 
     <el-table v-loading="listLoading" :data="list" fit highlight-current-row style="width: 98%; margin-top:30px;">
       <el-table-column align="center" label="ID" >
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ scope.row.id }}</span>
         </template>
       </el-table-column>
 
       <el-table-column align="center" label="标签名称">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ scope.row.tagName}}</span>
         </template>
       </el-table-column>
 
       <el-table-column align="center" label="标签创建时间">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ scope.row.createTime}}</span>
         </template>
       </el-table-column>
 
       <el-table-column align="center" label="上次修改时间">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ scope.row.updateTime}}</span>
         </template>
       </el-table-column>
 
 
       <el-table-column align="center" label="操作" width="180">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button type="primary" size="mini" icon="el-icon-edit" @click="openModel(scope.row)">编辑</el-button>
           <el-button type="danger" size="small" icon="el-icon-delete" @click="deleteTag(scope.row.id)">删除</el-button>
         </template>

@@ -10,7 +10,7 @@ export function getCommentList(query) {
 
 export function getCommentById(id) {
   return request({
-    url: '/comments/${id}', // 获取指定评论
+    url: `/comments/${id}`, // 获取指定评论
     method: 'get',
     params: { id }
   })

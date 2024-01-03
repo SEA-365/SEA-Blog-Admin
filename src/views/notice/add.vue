@@ -55,20 +55,35 @@
 
 <script>
 
-import { addNotice } from "@/api/notice";
+import { addNotice, deleteNoticeById, updateNotice, getNoticeList, getNoticeById} from "@/api/notice";
 import axios from "axios";
 import {getInfo} from "@/api/user";
+
+
+const TAG = "====sea====> notice/add.vue ====> "
 
 export default {
   name: 'NoticeAdd',
   created() {
     // 在组件创建时获取用户信息
     this.fetchUserInfo();
+
+    // 接收 "编辑公告" 操作传递的信息
+    const  noticeId = this.$route.params.noticeId;
+    console.log(TAG + "edit noticeId: " + noticeId)
+    if(noticeId){
+      getNoticeById(noticeId).then((result) => {
+        console.log(TAG + " 编辑公告操作 传递的data: " + JSON.stringify(result.data));
+        this.notice = result.data;
+        console.log(TAG + " notice: " + JSON.stringify(this.notice));
+      })
+    }
   },
   data() {
     return {
       showDialog: false,
       notice: {
+        id: "",
         noticeTitle: '',
         noticeContent: '',
         noticeType: 0,
@@ -87,16 +102,16 @@ export default {
         const token = this.$store.state.token;
         // 发送请求获取用户信息
         getInfo(token).then(response => {
-          const { data } = response
+          const { data } = response;
 
           this.user.username = data.username;
           this.notice.creator = data.username;
-          console.log(' getInfo成功！')
+          console.log(TAG + ' getInfo成功！')
         }).catch(error => {
-          console.log(' getInfo出现异常！')
+          console.log(TAG + ' getInfo出现异常！')
         })
       } catch (error) {
-        console.error('Failed to fetch data:', error);
+        console.error(TAG + 'Failed to fetch data:', error);
       }
     },
     openDialog() {
@@ -123,19 +138,29 @@ export default {
     handleSubmit() {
       this.showDialog = true;
       var body = this.notice;
-      addNotice(body).then((response) => {
-        this.$notify({
-          title: "提示",
-          message: `公告《${this.notice.noticeTitle}》发布成功`,
-          type: "success",
+      console.log(TAG + "edit or add notice: " + JSON.stringify(this.notice));
+      console.log(TAG + "edit or add noticeId: " + this.notice.id)
+      if(this.notice.id){
+        updateNotice(body).then((res) => {
+          this.$notify({
+            title: "提示",
+            message: `公告《${this.notice.noticeTitle}》更新成功`,
+            type: "success",
+          });
+          this.$router.push("/notice/list");
         });
-        this.$router.push("/notice/list");
-      })
+      }
+      else {
+        addNotice(body).then((response) => {
+          this.$notify({
+            title: "提示",
+            message: `公告《${this.notice.noticeTitle}》发布成功`,
+            type: "success",
+          });
+          this.$router.push("/notice/list");
+        })
+      }
     },
-    creatorUsername() {
-      return this.user.username; // 计算属性返回当前登录用户的用户名
-    },
-
   },
   computed: {
     // 计算属性，用于映射 noticeStatus 的值

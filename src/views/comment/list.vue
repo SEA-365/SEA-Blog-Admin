@@ -12,64 +12,64 @@
 
     <el-table v-loading="listLoading" :data="list" fit highlight-current-row style="width: 98%; margin-top:30px;">
       <el-table-column align="center" label="ID" >
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ scope.row.id }}</span>
         </template>
       </el-table-column>
 
       <el-table-column align="center" label="文章id">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ scope.row.articleId}}</span>
         </template>
       </el-table-column>
 
       <el-table-column align="center" label="文章作者">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ scope.row.articleAuthor}}</span>
         </template>
       </el-table-column>
 
       <el-table-column align="center" label="评论创建者id">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ scope.row.commentCreateId}}</span>
         </template>
       </el-table-column>
 
       <el-table-column align="center" label="被回复者id">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ scope.row.commentRelyId}}</span>
         </template>
       </el-table-column>
 
       <el-table-column align="center" label="评论创建时间">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ scope.row.commentCreateTime}}</span>
         </template>
       </el-table-column>
 
       <el-table-column align="center" label="评论内容">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ scope.row.commentContent}}</span>
         </template>
       </el-table-column>
 
 
       <el-table-column align="center" label="是否被删除">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ scope.row.isDelete}}</span>
         </template>
       </el-table-column>
 
 
       <el-table-column align="center" label="是否通过审核">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ scope.row.isReview}}</span>
         </template>
       </el-table-column>
 
 
       <el-table-column align="center" label="操作" width="180">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button type="primary" size="mini" icon="el-icon-edit" @click="openModel(scope.row)" :disabled="true" plain>编辑</el-button>
           <el-button type="danger" size="small" icon="el-icon-delete" @click="deleteComment(scope.row.id)">删除</el-button>
         </template>

@@ -3,19 +3,19 @@
 
     <el-table v-loading="listLoading" :data="list" fit highlight-current-row style="width: 98%; margin-top:30px;">
       <el-table-column align="center" label="ID" >
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ scope.row.id }}</span>
         </template>
       </el-table-column>
 
       <el-table-column align="center" label="公告标题">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ scope.row.noticeTitle}}</span>
         </template>
       </el-table-column>
 
       <el-table-column align="center" label="公告类型">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-tag :type="noticeType(scope.row.noticeType)">
             {{ map_type[scope.row.noticeType ] }}
           </el-tag>
@@ -24,7 +24,7 @@
 
 
       <el-table-column align="center" label="公告状态">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-tag :type="noticeStatus(scope.row.noticeStatus)">
             {{ map_status[scope.row.noticeStatus ] }}
           </el-tag>
@@ -32,36 +32,36 @@
       </el-table-column>
 
       <el-table-column align="center" label="公告内容">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ scope.row.noticeContent}}</span>
         </template>
       </el-table-column>
 
       <el-table-column align="center" label="创建者">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ scope.row.creator}}</span>
         </template>
       </el-table-column>
 
       <el-table-column align="center" label="创建时间">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ scope.row.createTime}}</span>
         </template>
       </el-table-column>
 
       <el-table-column align="center" label="更新时间">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ scope.row.updateTime}}</span>
         </template>
       </el-table-column>
 
 
-<!--      <el-table-column align="center" label="操作" width="180">-->
-<!--        <template slot-scope="scope">-->
-<!--          <el-button type="primary" size="mini" icon="el-icon-edit"  @click="openModel(scope.row)">编辑</el-button>-->
-<!--          <el-button type="danger" size="small" icon="el-icon-delete" @click="deleteNotice(scope.row.id)">删除</el-button>-->
-<!--        </template>-->
-<!--      </el-table-column>-->
+      <el-table-column align="center" label="操作" width="180">
+        <template slot-scope="scope">
+          <el-button type="primary" size="mini" icon="el-icon-edit"  @click="$router.push({ name: 'NoticeAdd', params: { noticeId: scope.row.id }})">编辑</el-button>
+          <el-button type="danger" size="small" icon="el-icon-delete" @click="deleteNotice(scope.row.id)">删除</el-button>
+        </template>
+      </el-table-column>
 
 
     </el-table>

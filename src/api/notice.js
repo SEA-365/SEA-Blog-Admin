@@ -10,7 +10,7 @@ export function getNoticeList(query) {
 
 export function getNoticeById(id) {
   return request({
-    url: '/notices/${id}', // 获取指定公告
+    url: `/notices/${id}`, // 获取指定公告
     method: 'get',
     params: { id }
   })

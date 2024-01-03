@@ -10,7 +10,7 @@ export function getCategoryList(query) {
 
 export function getCategoryById(id) {
   return request({
-    url: '/categories/${id}', // 获取指定分类
+    url: `/categories/${id}`, // 获取指定分类
     method: 'get',
     params: { id }
   })

@@ -192,10 +192,10 @@ export const constantRoutes = [
         meta: {title: '文章列表', icon: 'articleList_icon'}
       },
       {
-        path: 'introduction',
-        name: 'ArticleIntroduction',
-        component: () => import('@/views/article/introduction.vue'),
-        meta: {title: '文章模块介绍', icon: 'add_icon'}
+        path: 'add',
+        name: 'ArticleAdd',
+        component: () => import('@/views/article/add.vue'),
+        meta: {title: '发布文章', icon: 'add_icon'}
       }
     ]
   },

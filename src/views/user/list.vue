@@ -12,67 +12,67 @@
 
     <el-table v-loading="listLoading" :data="list" fit highlight-current-row style="width: 98%; margin-top:30px;">
       <el-table-column align="center" label="ID" >
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ scope.row.id }}</span>
         </template>
       </el-table-column>
 
       <el-table-column align="center" label="用户名">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ scope.row.username}}</span>
         </template>
       </el-table-column>
 
       <el-table-column align="center" label="密码">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ scope.row.password}}</span>
         </template>
       </el-table-column>
 
       <el-table-column align="center" label="邮箱">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ scope.row.email}}</span>
         </template>
       </el-table-column>
 
       <el-table-column align="center" label="手机号">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ scope.row.phone}}</span>
         </template>
       </el-table-column>
 
       <el-table-column align="center" label="性别">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ scope.row.gender}}</span>
         </template>
       </el-table-column>
 
       <el-table-column align="center" label="个人介绍">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ scope.row.intro}}</span>
         </template>
       </el-table-column>
 
       <el-table-column align="center" label="头像url">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ scope.row.avatarUrl}}</span>
         </template>
       </el-table-column>
 
       <el-table-column align="center" label="创建时间">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ scope.row.createTime}}</span>
         </template>
       </el-table-column>
 
       <el-table-column align="center" label="更新时间">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ scope.row.updateTime}}</span>
         </template>
       </el-table-column>
 
       <el-table-column align="center" label="操作" width="180">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button type="primary" size="mini" icon="el-icon-edit" @click="openModel(scope.row)">编辑</el-button>
           <el-button type="danger" size="small" icon="el-icon-delete" @click="deleteUser(scope.row.id)">删除</el-button>
         </template>

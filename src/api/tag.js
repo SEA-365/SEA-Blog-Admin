@@ -10,7 +10,7 @@ export function getTagList(query) {
 
 export function getTagById(id) {
   return request({
-    url: '/tags/${id}', // 获取指定标签
+    url: `/tags/${id}`, // 获取指定标签
     method: 'get',
     params: { id }
   })
