@@ -19,13 +19,48 @@
       <mavon-editor ref="md" v-model="article.content" style="height:calc(100vh - 260px)" placeholder="在此输入文章内容"/>
 
       <!-- 发布文章弹窗 -->
-      <el-dialog :title="`发布文章：${article.title}`" :visible.sync="showDialog" width="30%">
-        <el-form label-position="left" :model="article" label-width="80px">
-          <el-form-item label="文章作者">
+      <el-dialog :title="`发布文章：《${article.title}》`" :visible.sync="showDialog" width="30%">
+        <el-form label-position="left" :model="article" label-width="100px">
+          <el-form-item label="文章分类：">
+            <!--当前文章分类，当article.categoryName不是空时显示-->
+            <el-tag type="success" v-show="article.categoryName" style="margin: 0 1rem 0 0" :closable="true" @close="removeCategory">
+              {{ article.categoryName }}
+            </el-tag>
+            <!--文章分类弹出框，当article.categoryName为空时显示-->
+            <el-popover placement="bottom-start" width="460px" trigger="click" v-show="!article.categoryName">
+              <div class="popover-title">分类</div>
+              <!-- 搜索框 -->
+              <el-autocomplete
+                style="width:100%"
+                v-model="categoryName"
+                :fetch-suggestions="findCategory"
+                placeholder="请输入分类名搜索，如果自定义分类，输入完成之后直接回车即可！"
+                :trigger-on-focus="false"
+                @keyup.enter.native="saveCategory"
+                @select="handleFindCategory"
+              >
+                <template v-slot="{ item }">
+                  <div>{{ item.categoryName }}</div>
+                </template>
+              </el-autocomplete>
+
+              <!--分类数据展示-->
+              <div class="popover-container">
+                <div class="category-item" v-for="item of categoryList" :key="item.id" @click="addCategory(item)">
+                  {{ item.categoryName }}
+                </div>
+              </div>
+              <el-button type="success" plain slot="reference" size="small">添加分类</el-button>
+
+            </el-popover>
+          </el-form-item>
+
+
+          <el-form-item label="文章作者：">
             <el-input v-model="this.user.username" style="width:80%" />
           </el-form-item>
 
-          <el-form-item label="文章作者id">
+          <el-form-item label="文章作者ID：">
             <el-input v-model="this.user.userId" style="width:80%" />
           </el-form-item>
         </el-form>
@@ -47,6 +82,7 @@
 
 import { addArticle, deleteArticleById, updateArticle, getArticleList, getArticleById} from "@/api/article";
 import {getInfo, getUserById} from "@/api/user";
+import {addCategory, getCategoryByName} from "@/api/category";
 
 
 const TAG = "====sea====> article/add.vue ====> "
@@ -78,17 +114,29 @@ export default {
         title: '',
         content: '',
         categoryId: '',
-        categoryName: ''
+        categoryName: '',
+        tagList: null,
+        description: '',
+        imageUrl: '',
+        status: 1
+      },
+      listByNameQuery:{
+        categoryName: this.categoryName
       },
       user: {
         username: '',
         userId: ''
         // 其他用户信息...
       },
+      categoryName: '',
+      categoryList: null,
+      tagName: '',
+      tagList: null
     }
   },
   methods: {
     async fetchUserInfo() {
+      console.log(TAG + " fetchUserInfo() ");
       try {
         const token = this.$store.state.token;
         // 发送请求获取用户信息
@@ -109,6 +157,7 @@ export default {
       }
     },
     openDialog() {
+      console.log(TAG + " openDialog() ");
       if (
         this.assertNotEmpty(this.article.title, "请填写文章标题") &&
         this.assertNotEmpty(this.article.content, "请填写文章内容")
@@ -117,6 +166,7 @@ export default {
       }
     },
     assertNotEmpty(target, msg) {
+      console.log(TAG + " assertNotEmpty() ");
       if (!target) {
         this.$message({
           message: msg,
@@ -127,9 +177,11 @@ export default {
       return true;
     },
     handleCancel() {
+      console.log(TAG + " handleCancel() ");
       this.showDialog = false;
     },
     handleSubmit() {
+      console.log(TAG + " handleSubmit() ");
       this.showDialog = true;
       var body = this.article;
       console.log(TAG + "edit or add article: " + JSON.stringify(this.article));
@@ -154,6 +206,44 @@ export default {
           this.$router.push("/article/list");
         })
       }
+    },
+    removeCategory() {
+      console.log(TAG + " removeCategory() ");
+      this.article.categoryName = null;
+    },
+    getCategoryList() {
+      console.log(TAG + " getCategoryList() ");
+      let categoryName = '';
+      getCategoryByName(categoryName).then(response => {
+        this.categoryList = response.data;
+      })
+    },
+    findCategory(categoryName, cb) {
+      console.log(TAG + " findCategory() ");
+      this.listByNameQuery.categoryName = categoryName;
+      var body = this.listByNameQuery;
+      getCategoryByName( {body} ).then(response => {
+        cb(response.data)
+      })
+    },
+    saveCategory() {
+      console.log(TAG + " saveCategory() ");
+      if(this.categoryName.trim() !== ''){
+        this.addCategory({
+          categoryName: this.categoryName
+        });
+        this.categoryName = "";
+      }
+    },
+    addCategory(data){
+      console.log(TAG + " addCategory() ");
+      this.article.categoryName = data.categoryName;
+    },
+    handleFindCategory(data){
+      console.log(TAG + " handleFindCategory() ");
+      this.addCategory({
+        categoryName: data.categoryName
+      });
     },
   },
   computed: {
@@ -210,4 +300,22 @@ export default {
   margin-bottom: 1.25rem;
   margin-top: 1.25rem;
 }
+.popover-title {
+  margin-bottom: 1rem;
+  text-align: center;
+}
+.category-item {
+  cursor: pointer;
+  padding: 0.6rem 0.5rem;
+}
+.category-item:hover {
+  background-color: #f0f9eb;
+  color: #67c23a;
+}
+.popover-container {
+  margin-top: 1rem;
+  height: 260px;
+  overflow-y: auto;
+}
+
 </style>

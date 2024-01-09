@@ -129,40 +129,12 @@
     />
 
 
-    <!-- 添加/编辑对话框 -->
-<!--    <el-dialog :visible.sync="addOrUpdateDialogVisible" width="30%">-->
-<!--      <div class="dialog-title-container" slot="title" ref="articleTitle" />-->
-<!--      <el-form label-width="80px" size="medium" :model="articleForm">-->
-<!--        <el-form-item label="文章id">-->
-<!--          <el-input v-model="articleForm.id" style="width:80%" />-->
-<!--        </el-form-item>-->
-
-<!--        <el-form-item label="文章作者">-->
-<!--          <el-input v-model="articleForm.author" style="width:80%" />-->
-<!--        </el-form-item>-->
-
-<!--        <el-form-item label="文章标题">-->
-<!--          <el-input v-model="articleForm.title" style="width:80%" />-->
-<!--        </el-form-item>-->
-
-<!--        <el-form-item label="文章内容">-->
-<!--          <el-input v-model="articleForm.content" style="width:80%" />-->
-<!--        </el-form-item>-->
-
-<!--      </el-form>-->
-<!--      <div slot="footer">-->
-<!--        <el-button @click="addOrUpdateDialogVisible = false">取 消</el-button>-->
-<!--        <el-button type="primary" @click="addOrEditArticle">-->
-<!--          确 定-->
-<!--        </el-button>-->
-<!--      </div>-->
-<!--    </el-dialog>-->
-
   </el-card>
 </template>
 <script>
 import { getArticleList, getArticleById, deleteArticleById, updateArticle, addArticle} from "@/api/article";
 import ar from "element-ui/src/locale/lang/ar";
+import {getCategoryById} from "@/api/category";
 
 const TAG = "====sea====> article/list.vue ====> "
 

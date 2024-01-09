@@ -41,4 +41,13 @@ export function deleteTagById(id) {
 }
 
 
+export function getTagByName(data) {
+  return request({
+    url: `/tags/getTagByName`,  // 获取指定标签
+    method: 'post',
+    data
+  })
+}
+
+
 

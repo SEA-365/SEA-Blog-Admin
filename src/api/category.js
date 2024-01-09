@@ -40,5 +40,13 @@ export function deleteCategoryById(id) {
   })
 }
 
+export function getCategoryByName(body) {
+  return request({
+    url: `/categories/getCategoryByName`,  // 获取指定分类
+    method: 'post',
+    data: body
+  })
+}
+
 
 
