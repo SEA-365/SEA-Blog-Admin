@@ -25,7 +25,7 @@
           <!--添加文章分类-->
           <el-form-item label="文章分类：">
             <!--当前文章分类，当article.categoryName不是空时显示-->
-            <el-tag type="success" v-show="article.categoryName" style="margin: 0 1rem 0 0" :closable="true" @close="removeCategory">
+            <el-tag type="warning" v-show="article.categoryName" style="margin: 0 1rem 0 0" :closable="true" @close="removeCategory">
               {{ article.categoryName }}
             </el-tag>
             <!--文章分类弹出框，当article.categoryName为空时显示-->
@@ -51,7 +51,7 @@
 
               <!--分类数据展示-->
               <div class="popover-container">
-                <div class="category-item" v-for="item of categoryList" :key="item.id" @click="addCategory(item)">
+                <div class="category-item" v-for="item of categoryList" :key="item.id" @click.native="addCategory(item)">
                   {{ item.categoryName }}
                 </div>
               </div>
@@ -61,7 +61,44 @@
           </el-form-item>
 
           <!--添加文章标签-->
+          <el-form-item label="文章标签：">
+            <!--当前文章标签，当tagList不是空时显示-->
+            <el-tag type="success" v-show="article.tagList" v-for="(tag, index) in article.tagList" :key="index" style="margin: 0 1rem 0 0" :closable="true" @close="removeTag(tag)">
+              {{ tag.tagName }}
+            </el-tag>
 
+            <!--标签选择或新增，每篇文章不超过5个标签-->
+            <el-popover placement="bottom-start" width="460px" trigger="click">
+              <div class="popover-title">标签</div>
+              <!-- 搜索框 -->
+              <!--  :fetch-suggestions="findTag"  ==> findTag函数将在用户输入时触发  -->
+              <!--  @keyup.enter.native="saveTag"  ==> saveTag函数将在用户按下回车键时触发  -->
+              <!--  @select="handleFindTag"  ==> handleFindTag函数将在用户选择一个建议项时触发  -->
+              <el-autocomplete
+                style="width:100%"
+                v-model="tagName"
+                :fetch-suggestions="findTag"
+                placeholder="请输入标签名搜索，如果自定义标签，输入完成之后直接回车即可！"
+                :trigger-on-focus="false"
+                @keyup.enter.native="saveTag"
+                @select="handleFindTag"
+              >
+                <template v-slot="{ item }">
+                  <div>{{ item.tagName }}</div>
+                </template>
+              </el-autocomplete>
+
+              <!--分类数据展示-->
+              <div class="popover-container">
+                <div style="margin-bottom: 1rem">添加标签</div>
+                <el-tag style="margin: 3px" v-for="(item, index) of tagList" :key="index" :class="tagClass(item)" @click.native="addTag(item)">
+                  {{ item.tagName }}
+                </el-tag>
+              </div>
+              <el-button type="primary" plain slot="reference">添加标签</el-button>
+
+            </el-popover>
+          </el-form-item>
 
           <el-form-item label="文章作者：">
             <el-input v-model="this.user.username" style="width:80%" />
@@ -90,6 +127,7 @@
 import { addArticle, deleteArticleById, updateArticle, getArticleList, getArticleById} from "@/api/article";
 import {getInfo, getUserById} from "@/api/user";
 import {addCategory, getCategoryByName} from "@/api/category";
+import {getTagByName} from "@/api/tag";
 
 
 const TAG = "====sea====> article/add.vue ====> "
@@ -107,6 +145,7 @@ export default {
       getArticleById(articleId).then((result) => {
         console.log(TAG + " 编辑文章操作 传递的data: " + JSON.stringify(result.data));
         this.article = result.data;
+        this.tagList = result.data.tagList;
         console.log(TAG + " article: " + JSON.stringify(this.article));
       })
     }
@@ -125,10 +164,11 @@ export default {
         tagList: null,
         description: '',
         imageUrl: '',
-        status: 1
+        status: 1,
       },
       listByNameQuery:{
-        categoryName: this.categoryName
+        categoryName: this.categoryName,
+        tagName: this.tagName
       },
       user: {
         username: '',
@@ -275,7 +315,61 @@ export default {
       });
     },
 
+    // 获取标签列表
+    getTagList(){
+      console.log(TAG + " getTagList() ");
+      this.listByNameQuery.tagName = '';
+      var body = this.listByNameQuery;
+      getTagByName({ body }).then(response => {
+        console.log(TAG + " response: " + JSON.stringify(response.data))
+        this.tagList = response.data;
+      })
+    },
 
+    // 模糊搜索标签
+    findTag(tagName, cb) {
+      console.log(TAG + " findTag() ");
+      this.listByNameQuery.tagName = tagName;
+      var body = this.listByNameQuery;
+      getTagByName( {body} ).then(response => {
+        cb(response.data)
+      })
+    },
+
+    handleFindTag(data) {
+      this.addTag({
+        tagName: data.tagName
+      });
+    },
+
+    // 保存输入的标签
+    saveTag() {
+      console.log(TAG + " saveTag() ");
+      if(this.tagName.trim() !== ''){
+        this.addTag({
+          tagName: this.tagName
+        });
+        this.tagName = "";
+      }
+    },
+
+    // 新增标签
+    addTag(data){
+      console.log(TAG + " addTag() ");
+      if (!this.article.tagList || this.article.tagList.indexOf(data) === -1) {
+        console.log(TAG + " addTag() " + data.tagName);
+        if(!this.article.tagList){
+          this.article.tagList = [];
+        }
+        this.article.tagList.push(data);
+        console.log(TAG + " addTag() " + JSON.stringify(this.article.tagList));
+      }
+    },
+
+    removeTag(item) {
+      const index = this.article.tagList.indexOf(item);
+      this.article.tagList.splice(index, 1);
+    },
 
   },
   computed: {
@@ -291,6 +385,12 @@ export default {
       },
 
     },
+    tagClass() {
+      return function(item) {
+        const index = this.article.tagList.indexOf(item.tagName);
+        return index !== -1 ? "tag-item-select" : "tag-item";
+      };
+    }
   }
 
 }

@@ -20,9 +20,17 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="文章分类">
+      <el-table-column align="center"  label="文章分类">
         <template slot-scope="scope">
-          <span>{{ scope.row.categoryName}}</span>
+          <el-tag type="warning" style="margin: 5px">{{ scope.row.categoryName}}</el-tag>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" label="文章标签">
+        <template slot-scope="scope">
+          <el-tag style="margin: 5px" type="success" v-for="(tag, index) in scope.row.tagList" :key="index">
+            {{ tag.tagName }}
+          </el-tag>
         </template>
       </el-table-column>
 
@@ -70,19 +78,23 @@
 
       <el-table-column align="center" label="是否置顶">
         <template slot-scope="scope">
-          <span>{{ scope.row.isTop}}</span>
+          <el-tag :type="typeTop(scope.row.isTop)">
+            {{ mapIs[scope.row.isTop] }}
+          </el-tag>
         </template>
       </el-table-column>
 
       <el-table-column align="center" label="是否被删除">
         <template slot-scope="scope">
-          <span>{{ scope.row.isDelete}}</span>
+          <el-tag :type="typeDelete(scope.row.isDelete)">
+            {{ mapIs[scope.row.isDelete] }}
+          </el-tag>
         </template>
       </el-table-column>
 
       <el-table-column align="center" label="文章状态">
         <template slot-scope="scope">
-          <span>{{ scope.row.status}}</span>
+          <el-tag :type="typeStatus(scope.row.status)">{{ mapStatus[scope.row.status] }}</el-tag>
         </template>
       </el-table-column>
 
@@ -160,6 +172,15 @@ export default {
         author: '',
         title: '',
         content: '',
+      },
+      mapIs: {
+        0: '否',
+        1: '是'
+      },
+      mapStatus: {
+        1: '已发布',
+        2: '加密',
+        3: '草稿'
       }
     }
   },
@@ -261,7 +282,23 @@ export default {
         })
       }
       this.addOrUpdateDialogVisible = false;
+    },
+    typeTop(item) {
+      if(item === 0)
+        return 'primary';
+      if(item === 1)
+        return 'danger';
+    },
+    typeDelete(item) {
+      if(item === 0)
+        return 'primary';
+      if(item === 1)
+        return 'danger';
+    },
+    typeStatus(item){
+
     }
+
   }
 
 }
