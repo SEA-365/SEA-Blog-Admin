@@ -21,6 +21,8 @@
       <!-- 发布文章弹窗 -->
       <el-dialog :title="`发布文章：《${article.title}》`" :visible.sync="showDialog" width="30%">
         <el-form label-position="left" :model="article" label-width="100px">
+
+          <!--添加文章分类-->
           <el-form-item label="文章分类：">
             <!--当前文章分类，当article.categoryName不是空时显示-->
             <el-tag type="success" v-show="article.categoryName" style="margin: 0 1rem 0 0" :closable="true" @close="removeCategory">
@@ -30,6 +32,9 @@
             <el-popover placement="bottom-start" width="460px" trigger="click" v-show="!article.categoryName">
               <div class="popover-title">分类</div>
               <!-- 搜索框 -->
+              <!--  :fetch-suggestions="findCategory"  ==> findCategory函数将在用户输入时触发  -->
+              <!--  @keyup.enter.native="saveCategory"  ==> saveCategory函数将在用户按下回车键时触发  -->
+              <!--  @select="handleFindCategory"  ==> handleFindCategory函数将在用户选择一个建议项时触发  -->
               <el-autocomplete
                 style="width:100%"
                 v-model="categoryName"
@@ -54,6 +59,8 @@
 
             </el-popover>
           </el-form-item>
+
+          <!--添加文章标签-->
 
 
           <el-form-item label="文章作者：">
@@ -135,6 +142,7 @@ export default {
     }
   },
   methods: {
+    // 获取当前登录用户的信息
     async fetchUserInfo() {
       console.log(TAG + " fetchUserInfo() ");
       try {
@@ -156,6 +164,8 @@ export default {
         console.error(TAG + 'Failed to fetch data:', error);
       }
     },
+
+    // 点击发布文章按钮，打开弹窗
     openDialog() {
       console.log(TAG + " openDialog() ");
       if (
@@ -165,6 +175,7 @@ export default {
         this.showDialog = true;
       }
     },
+
     assertNotEmpty(target, msg) {
       console.log(TAG + " assertNotEmpty() ");
       if (!target) {
@@ -176,10 +187,14 @@ export default {
       }
       return true;
     },
+
+    // 点击取消按钮处理逻辑
     handleCancel() {
       console.log(TAG + " handleCancel() ");
       this.showDialog = false;
     },
+
+    // 点击发布按钮处理逻辑
     handleSubmit() {
       console.log(TAG + " handleSubmit() ");
       this.showDialog = true;
@@ -207,17 +222,25 @@ export default {
         })
       }
     },
+
+    // 移除当前文章分类
     removeCategory() {
       console.log(TAG + " removeCategory() ");
       this.article.categoryName = null;
     },
+
+    // 获取分类列表
     getCategoryList() {
       console.log(TAG + " getCategoryList() ");
-      let categoryName = '';
-      getCategoryByName(categoryName).then(response => {
+      this.listByNameQuery.categoryName = '';
+      var body = this.listByNameQuery;
+      getCategoryByName({ body }).then(response => {
+        console.log(TAG + " response: " + JSON.stringify(response.data))
         this.categoryList = response.data;
       })
     },
+
+    // 模糊搜索分类
     findCategory(categoryName, cb) {
       console.log(TAG + " findCategory() ");
       this.listByNameQuery.categoryName = categoryName;
@@ -226,6 +249,8 @@ export default {
         cb(response.data)
       })
     },
+
+    // 保存输入的分类
     saveCategory() {
       console.log(TAG + " saveCategory() ");
       if(this.categoryName.trim() !== ''){
@@ -235,16 +260,23 @@ export default {
         this.categoryName = "";
       }
     },
+
+    // 新增分类
     addCategory(data){
       console.log(TAG + " addCategory() ");
       this.article.categoryName = data.categoryName;
     },
+
+    // 选取建议项分类的处理逻辑
     handleFindCategory(data){
       console.log(TAG + " handleFindCategory() ");
       this.addCategory({
         categoryName: data.categoryName
       });
     },
+
+
+
   },
   computed: {
     // 计算属性，用于映射 articleStatus 的值
