@@ -412,7 +412,7 @@ export default {
       return isFileSizeExceed && isJPGOrPNG;
     },
 
-    // 自定义图片上传请求
+    // 自定义图片上传请求，覆盖原来的
     uploadImgFile(param) {
       let fd = new FormData();
       fd.append("file", param.file);
