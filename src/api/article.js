@@ -43,4 +43,12 @@ export function deleteArticleById(id) {
 }
 
 
+export function uploadImg(data){
+  return request({
+    url: 'articles/uploadImg', // 上传文章封面
+    method: 'post',
+    data
+  })
+}
+
 

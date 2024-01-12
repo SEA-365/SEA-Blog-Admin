@@ -22,6 +22,29 @@
       <el-dialog :title="`发布文章：《${article.title}》`" :visible.sync="showDialog" width="30%">
         <el-form label-position="left" :model="article" label-width="100px">
 
+          <el-form-item label="上传文章封面">
+            <!--上传组件：使用http-request自定义上传方式覆盖默认上传方式-->
+            <el-upload
+              class="upload-img"
+              drag
+              action=""
+              :http-request="uploadImgFile"
+              multiple
+              :before-upload="handleUploadBefore">
+              <i class="el-icon-upload" v-if="article.imageUrl === ''"></i>
+              <div class="el-upload__text" v-if="article.imageUrl === ''">将文件拖到此处，或<em>点击上传</em></div>
+
+              <!-- 否则，显示文章中定义的图片 -->
+              <el-image
+                v-else
+                :src="article.imageUrl"
+                alt="文章图片描述"
+                width="360px"
+                height="180px"
+              />
+            </el-upload>
+          </el-form-item>
+
           <!--添加文章分类-->
           <el-form-item label="文章分类：">
             <!--当前文章分类，当article.categoryName不是空时显示-->
@@ -100,6 +123,10 @@
             </el-popover>
           </el-form-item>
 
+          <el-form-item label="文章摘要">
+            <el-input type="textarea" :row="2" placeholder="请输入文章摘要" v-model="article.description" style="width: 220px"/>
+          </el-form-item>
+
           <el-form-item label="文章作者：">
             <el-input v-model="this.user.username" style="width:80%" />
           </el-form-item>
@@ -124,10 +151,11 @@
 
 <script>
 
-import { addArticle, deleteArticleById, updateArticle, getArticleList, getArticleById} from "@/api/article";
+import {addArticle, deleteArticleById, updateArticle, getArticleList, getArticleById, uploadImg} from "@/api/article";
 import {getInfo, getUserById} from "@/api/user";
 import {addCategory, getCategoryByName} from "@/api/category";
 import {getTagByName} from "@/api/tag";
+import upload from "element-ui/packages/upload";
 
 
 const TAG = "====sea====> article/add.vue ====> "
@@ -371,8 +399,40 @@ export default {
       this.article.tagList.splice(index, 1);
     },
 
+    // 文件上传前进行大小和格式检查
+    handleUploadBefore(file){
+      const isJPGOrPNG = file.type === "image/jpeg" || file.type === "image/png";
+      const isFileSizeExceed = file.size / 1024 / 1024 < 10;
+      if(!isJPGOrPNG){
+        this.$message.error('请上传JPG格式或PNG格式的图片！');
+      }
+      if(!isFileSizeExceed){
+        this.$message.error('上传的图片大小不能超过10MB！');
+      }
+      return isFileSizeExceed && isJPGOrPNG;
+    },
+
+    // 自定义图片上传请求
+    uploadImgFile(param) {
+      let fd = new FormData();
+      fd.append("file", param.file);
+      uploadImg(fd).then(response => {
+        console.log(TAG + " url: " + JSON.stringify(response));
+        if(response.data && response.data.statusCode === 20000){
+          this.$message({
+            type: 'success',
+            message: '图片上传成功!'
+          })
+        }
+        this.article.imageUrl = response.data;
+      })
+    }
+
   },
   computed: {
+    upload() {
+      return upload
+    },
     // 计算属性，用于映射 articleStatus 的值
     mappedArticleStatus: {
       get() {
