@@ -10,7 +10,7 @@
       <!-- 文章标题 -->
       <div class="article-title-container">
         <el-input size="medium"  v-model="article.title" placeholder="输入文章标题"/>
-        <el-button type="warning" size="medium" @click="openDialog" style="margin-left:10px">保存草稿</el-button>
+        <el-button type="warning" size="medium" @click="saveDraft" style="margin-left:10px">保存草稿</el-button>
         <el-button type="danger" size="medium" @click="openDialog" style="margin-left:10px">发布文章</el-button>
       </div>
 
@@ -134,6 +134,17 @@
           <el-form-item label="文章作者ID：">
             <el-input v-model="this.user.userId" style="width:80%" />
           </el-form-item>
+
+          <el-form-item label="发布形式">
+            <el-radio-group v-model="article.status">
+              <el-radio :label="1" @change="handleRadioChange">全部可见</el-radio>
+              <el-radio :label="2" @change="handleRadioChange">加密文章</el-radio>
+            </el-radio-group>
+          </el-form-item>
+
+          <el-form-item label="文章密码" v-if="showPasswordInput">
+            <el-input v-model="article.password" type="password" style="width:80%"></el-input>
+          </el-form-item>
         </el-form>
 
         <span slot="footer">
@@ -180,7 +191,8 @@ export default {
   },
   data() {
     return {
-      showDialog: false,
+      showDialog: false, // 发布文章痰弹窗显示
+      showPasswordInput: false, // 文章密码输入框显示
       article: {
         id: "",
         userId: '',
@@ -193,6 +205,7 @@ export default {
         description: '',
         imageUrl: '',
         status: 1,
+        password: '',
       },
       listByNameQuery:{
         categoryName: this.categoryName,
@@ -426,6 +439,59 @@ export default {
         }
         this.article.imageUrl = response.data;
       })
+    },
+
+    // 保存草稿
+    saveDraft() {
+      this.article.status = 3;
+      if (
+        this.assertNotEmpty(this.article.title, "请填写文章标题") &&
+        this.assertNotEmpty(this.article.content, "请填写文章内容")
+      ) {
+
+        let body = this.article;
+        console.log(TAG + "saveDraft() article: " + JSON.stringify(this.article));
+        console.log(TAG + "saveDraft() articleId: " + this.article.id)
+        if(this.article.id){
+          updateArticle(body).then((response) => {
+            if(response.statusCode === 20000){
+              this.$message({
+                type: "success",
+                message: "保存草稿成功！"
+              })
+            }
+            else{
+              this.$message({
+                type: "error",
+                message: "保存草稿失败！"
+              })
+            }
+          });
+        }
+        else {
+          addArticle(body).then((response) => {
+            if(response.statusCode === 20000){
+              this.$message({
+                type: "success",
+                message: "保存草稿成功！"
+              })
+            }
+            else{
+              this.$message({
+                type: "error",
+                message: "保存草稿失败！"
+              })
+            }
+            this.$router.push("/article/list");
+          })
+        }
+      }
+      return false;
+    },
+
+    // 文章密码输入框显示
+    handleRadioChange(){
+      this.showPasswordInput = this.article.status === 2;
     }
 
   },

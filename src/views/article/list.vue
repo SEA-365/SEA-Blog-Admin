@@ -1,6 +1,67 @@
 <template>
   <el-card class="box-card">
 
+    <!-- 设置标题文章管理 -->
+    <div slot="header" class="clearfix">
+      <span>文章列表</span>
+    </div>
+
+    <!-- 文章条件查询 -->
+    <div style="margin-left: auto">
+      <!-- 按照分类查询 -->
+      <el-select
+        clearable
+        size="small"
+        v-model="categoryId"
+        filterable
+        placeholder="请选择分类"
+        style="margin-right: 1rem"
+      >
+        <el-option
+          v-for="item in categoryList"
+          :key="item.id"
+          :label="item.categoryName"
+          :value="item.id"
+        />
+      </el-select>
+
+      <!-- 文章类型 -->
+      <el-select
+        clearable
+        v-model="status"
+        placeholder="请选择文章类型"
+        size="small"
+        style="margin-right:1rem"
+      >
+        <el-option
+          v-for="item in statusList"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        />
+      </el-select>
+
+      <!-- 文章名 -->
+      <el-input
+        clearable
+        v-model="title"
+        prefix-icon="el-icon-search"
+        size="small"
+        placeholder="请输入文章名"
+        style="width:200px"
+        @keyup.enter.native="articleList"
+      />
+
+      <el-button
+        type="primary"
+        size="small"
+        icon="el-icon-search"
+        style="margin-left:1rem"
+        @click="articleList"
+      >
+        搜索
+      </el-button>
+    </div>
     <el-table v-loading="listLoading" :data="list" fit highlight-current-row style="width: 98%; margin-top:30px;">
       <el-table-column align="center" label="ID" >
         <template slot-scope="scope">
@@ -72,7 +133,16 @@
 
       <el-table-column align="center" label="文章封面">
         <template slot-scope="scope">
-          <span>{{ scope.row.imageUrl}}</span>
+          <span>
+            <el-image
+              v-if="scope.row.imageUrl"
+              :src="scope.row.imageUrl"
+              alt="暂无"
+              width="360px"
+              height="180px"
+            />
+            <div v-else> 暂无封面 </div>
+          </span>
         </template>
       </el-table-column>
 
@@ -146,7 +216,8 @@
 <script>
 import { getArticleList, getArticleById, deleteArticleById, updateArticle, addArticle} from "@/api/article";
 import ar from "element-ui/src/locale/lang/ar";
-import {getCategoryById} from "@/api/category";
+import {getCategoryById, getCategoryByName} from "@/api/category";
+import {getTagByName} from "@/api/tag";
 
 const TAG = "====sea====> article/list.vue ====> "
 
@@ -154,7 +225,9 @@ export default {
   name: 'ArticleList',
 
   created() {
-    this.articleList()
+    this.articleList();
+    this.getCategoryList();
+    this.getTagList();
   },
 
   data(){
@@ -163,16 +236,39 @@ export default {
       listLoading: true,
       listQuery: {
         pageNum: 1,
-        pageSize: 10
+        pageSize: 10,
+        title: this.title,
+        status: this.status,
+        categoryId: this.categoryId,
       },
-      addOrUpdateDialogVisible: false,
       count: 0,
-      articleForm: {
-        id: null,
-        author: '',
-        title: '',
-        content: '',
+      listByNameQuery:{
+        categoryName: '',
+        tagName: ''
       },
+      categoryId: null,
+      categoryList: null,
+      status: null,
+      tagId: null,
+      tagList: [],
+      title: '',
+      countView: null,
+      totalWords: null,
+      description: null,
+      statusList: [
+        {
+          value: 1,
+          label: "已发布"
+        },
+        {
+          value: 2,
+          label: "加密"
+        },
+        {
+          value: 3,
+          label: "草稿"
+        }
+      ],
       mapIs: {
         0: '否',
         1: '是'
@@ -186,8 +282,12 @@ export default {
   },
   methods: {
     articleList(){
-      this.listLoading = true
-      var body = this.listQuery
+      this.listLoading = true;
+      this.listQuery.title = this.title;
+      this.listQuery.categoryId = this.categoryId;
+      this.listQuery.status = this.status;
+      let body = this.listQuery;
+      console.log(TAG + " listQuery: " + JSON.stringify(body))
       getArticleList({ body }).then(response => {
         console.log(TAG + " response: " + JSON.stringify(response))
         this.list = response.data.result
@@ -244,45 +344,28 @@ export default {
         })
       })
     },
-    openModel(article) {
-      if (article != null) {
-        this.articleForm = JSON.parse(JSON.stringify(article));
-        this.$refs.articleTitle.innerHTML = "修改文章";
-      } else {
-        this.articleForm.id = null;
-        this.articleForm.author = '';
-        this.articleForm.title = '';
-        this.articleForm.content = '';
-        this.$refs.articleTitle.innerHTML = "添加文章";
-      }
-      this.addOrUpdateDialogVisible = true;
+    // 获取所有分类列表
+    getCategoryList(){
+      this.listByNameQuery.categoryName = '';
+      let body = this.listByNameQuery;
+      console.log(TAG + "body: " + JSON.stringify(body))
+      getCategoryByName({ body }).then(response =>{
+        console.log(TAG + " response: " + JSON.stringify(response));
+        this.categoryList = response.data;
+      });
     },
-    addOrEditArticle() {
-      var body = this.articleForm;
-      if(body.id == null){
-        addArticle(body).then(response => {
-          this.$message({
-            type: 'success',
-            message: '添加文章成功!'
-          })
-          //重新获取文章列表
-          this.articleList()
-        }).catch(() => {
-          console.log('error')
-        })
-      } else {
-        updateArticle(body).then(response => {
-          this.$message({
-            type: 'success',
-            message: '修改文章成功!'
-          })
-          this.articleList()
-        }).catch(() => {
-          console.log('error')
-        })
-      }
-      this.addOrUpdateDialogVisible = false;
+
+    // 获取所有标签列表
+    getTagList(){
+      this.listByNameQuery.tagName = '';
+      let body = this.listByNameQuery;
+      console.log(TAG + "body: " + JSON.stringify(body))
+      getTagByName({ body }).then(response =>{
+        console.log(TAG + " response: " + JSON.stringify(response));
+        this.tagList = response.data;
+      });
     },
+
     typeTop(item) {
       if(item === 0)
         return 'primary';
@@ -296,7 +379,12 @@ export default {
         return 'danger';
     },
     typeStatus(item){
-
+      if(item === 1)
+        return 'success';
+      if(item === 2)
+        return 'warning';
+      if(item === 3)
+        return 'danger';
     }
 
   }
