@@ -25,6 +25,23 @@
         />
       </el-select>
 
+      <!-- 按照标签查询 -->
+      <el-select
+        clearable
+        size="small"
+        v-model="tagId"
+        filterable
+        placeholder="请选择标签"
+        style="margin-right: 1rem"
+      >
+        <el-option
+          v-for="item in tagList"
+          :key="item.id"
+          :label="item.tagName"
+          :value="item.id"
+        />
+      </el-select>
+
       <!-- 文章类型 -->
       <el-select
         clearable
@@ -240,6 +257,7 @@ export default {
         title: this.title,
         status: this.status,
         categoryId: this.categoryId,
+        tagId: this.tagId
       },
       count: 0,
       listByNameQuery:{
@@ -285,24 +303,25 @@ export default {
       this.listLoading = true;
       this.listQuery.title = this.title;
       this.listQuery.categoryId = this.categoryId;
+      this.listQuery.tagId = this.tagId;
       this.listQuery.status = this.status;
       let body = this.listQuery;
-      console.log(TAG + " listQuery: " + JSON.stringify(body))
+      console.log(TAG + " listQuery: " + JSON.stringify(body));
       getArticleList({ body }).then(response => {
-        console.log(TAG + " response: " + JSON.stringify(response))
-        this.list = response.data.result
-        this.count = response.data.totalSize
-        this.listLoading = false
+        console.log(TAG + " response: " + JSON.stringify(response));
+        this.list = response.data.result;
+        this.count = response.data.totalSize;
+        this.listLoading = false;
       })
     },
 
     handleSizeChange(pageSize) {
-      this.listQuery.pageSize = pageSize
-      this.articleList()
+      this.listQuery.pageSize = pageSize;
+      this.articleList();
     },
     handleCurrentChange(pageNum) {
-      this.listQuery.pageNum = pageNum
-      this.articleList()
+      this.listQuery.pageNum = pageNum;
+      this.articleList();
     },
     deleteArticle (id) {// 逻辑删除文章
       this.$confirm('此操作将永久删除该文章, 是否继续?', '提示', {
@@ -335,20 +354,20 @@ export default {
               console.log('error')
             })
           }
-        })
+        });
       }).catch(() => {
         console.log(TAG + " 取消删除文章： " + id);
         this.$message({
           type: 'error',
           message: '你已经取消删除该文章！'
         })
-      })
+      });
     },
     // 获取所有分类列表
     getCategoryList(){
       this.listByNameQuery.categoryName = '';
       let body = this.listByNameQuery;
-      console.log(TAG + "body: " + JSON.stringify(body))
+      console.log(TAG + "body: " + JSON.stringify(body));
       getCategoryByName({ body }).then(response =>{
         console.log(TAG + " response: " + JSON.stringify(response));
         this.categoryList = response.data;
@@ -359,7 +378,7 @@ export default {
     getTagList(){
       this.listByNameQuery.tagName = '';
       let body = this.listByNameQuery;
-      console.log(TAG + "body: " + JSON.stringify(body))
+      console.log(TAG + "body: " + JSON.stringify(body));
       getTagByName({ body }).then(response =>{
         console.log(TAG + " response: " + JSON.stringify(response));
         this.tagList = response.data;
