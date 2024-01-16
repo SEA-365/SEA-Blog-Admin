@@ -3,7 +3,9 @@
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-icon-wrapper icon-people">
-          <svg-icon icon-class="peoples" class-name="card-panel-icon" />
+<!--          <svg-icon icon-class="peoples" class-name="card-panel-icon" />-->
+<!--          <img :src="dashboard_article" class="card-panel-icon"  alt="文章图标"/>-->
+          <el-image :src = "'/img/dashboard_article.svg'" class="card-panel-icon" style="width: auto"/>
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
@@ -16,7 +18,8 @@
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-icon-wrapper icon-message">
-          <svg-icon icon-class="message" class-name="card-panel-icon" />
+<!--          <svg-icon icon-class="message" class-name="card-panel-icon" />-->
+          <el-image :src = "'/img/dashboard_category.svg'" class="card-panel-icon" />
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
@@ -29,7 +32,8 @@
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-icon-wrapper icon-money">
-          <svg-icon icon-class="money" class-name="card-panel-icon" />
+<!--          <svg-icon icon-class="money" class-name="card-panel-icon" />-->
+          <el-image :src = "'/img/dashboard_tag.svg'" class="card-panel-icon" />
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
@@ -42,7 +46,8 @@
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-icon-wrapper icon-shopping">
-          <svg-icon icon-class="shopping" class-name="card-panel-icon" />
+<!--          <svg-icon icon-class="shopping" class-name="card-panel-icon" />-->
+          <el-image :src = "'/img/dashboard_user.svg'" class="card-panel-icon" />
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
@@ -57,8 +62,15 @@
 
 <script>
 import CountTo from 'vue-count-to'
+import dashboard from "@/views/dashboard/index.vue";
+
 
 export default {
+  computed: {
+    dashboard() {
+      return dashboard
+    }
+  },
   components: {
     CountTo
   },
@@ -95,11 +107,11 @@ export default {
       }
 
       .icon-people {
-        background: #40c9c6;
+        background: #687f8b;
       }
 
       .icon-message {
-        background: #36a3f7;
+        background: #964d76;
       }
 
       .icon-money {
@@ -111,21 +123,21 @@ export default {
       }
     }
 
-    .icon-people {
-      color: #40c9c6;
-    }
-
-    .icon-message {
-      color: #36a3f7;
-    }
-
-    .icon-money {
-      color: #f4516c;
-    }
-
-    .icon-shopping {
-      color: #34bfa3
-    }
+    //.icon-people {
+    //  color: #40c9c6;
+    //}
+    //
+    //.icon-message {
+    //  color: #36a3f7;
+    //}
+    //
+    //.icon-money {
+    //  color: #f4516c;
+    //}
+    //
+    //.icon-shopping {
+    //  color: #34bfa3
+    //}
 
     .card-panel-icon-wrapper {
       float: left;
@@ -138,6 +150,8 @@ export default {
     .card-panel-icon {
       float: left;
       font-size: 48px;
+      width: 50px;
+      height: 50px;
     }
 
     .card-panel-description {
@@ -149,7 +163,7 @@ export default {
       .card-panel-text {
         line-height: 18px;
         color: rgba(0, 0, 0, 0.45);
-        font-size: 16px;
+        font-size: 24px;
         margin-bottom: 12px;
       }
 
