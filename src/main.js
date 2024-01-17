@@ -20,6 +20,10 @@ import '@/permission' // permission control
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 
+import Icon from 'vue-svg-icon/Icon.vue' //引入svg插件
+
+Vue.component('icon', Icon) //注册svg插件
+
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
