@@ -91,13 +91,15 @@ export default {
     return {
       date: "",
       week: "",
+      activeName: 1,
+      list: []
     }
   },
   created() {
     var now = new Date();
     this.date = now.getDate();//得到日期
     var day = now.getDay();//得到周几
-    var arr_week = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
+    var arr_week = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
     this.week = arr_week[day];
   },
   name: 'Dashboard',
@@ -114,6 +116,8 @@ export default {
       'name',
       'roles'
     ]),
+  },
+  methods: {
     clickDay(data) {},
     changeDate(data) {},
     clickToday(data) {}

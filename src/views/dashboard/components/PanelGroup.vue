@@ -1,5 +1,5 @@
 <template>
-  <el-row :gutter="40" class="panel-group">
+  <el-row :gutter="40" class="panel-group" :data="list">
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-icon-wrapper icon-people">
@@ -11,7 +11,7 @@
           <div class="card-panel-text">
             文章数量
           </div>
-          <count-to :start-val="0" :end-val="102400" :duration="2600" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="list.articleCount" :duration="2600" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -25,7 +25,7 @@
           <div class="card-panel-text">
             分类数量
           </div>
-          <count-to :start-val="0" :end-val="81212" :duration="3000" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="list.categoryCount" :duration="3000" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -39,7 +39,7 @@
           <div class="card-panel-text">
             标签数量
           </div>
-          <count-to :start-val="0" :end-val="9280" :duration="3200" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="list.tagCount" :duration="3200" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -53,7 +53,7 @@
           <div class="card-panel-text">
             用户数量
           </div>
-          <count-to :start-val="0" :end-val="13600" :duration="3600" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="list.userCount" :duration="3600" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -62,12 +62,33 @@
 
 <script>
 import CountTo from 'vue-count-to'
+import {getPanelCount} from "@/api/dashboard";
 
+const TAG = '=====sea======>'
 
 export default {
   components: {
     CountTo
   },
+  data() {
+    return {
+      list: null,
+      listLoading: true,
+    }
+  },
+
+  created() {
+    this.fetchCount()
+  },
+  methods: {
+    fetchCount(){
+      this.listLoading = true;
+      getPanelCount().then(response => {
+        console.log(TAG + JSON.stringify(response))
+        this.list = response.data
+      })
+    }
+  }
 }
 </script>
 
