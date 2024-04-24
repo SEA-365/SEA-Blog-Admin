@@ -16,7 +16,7 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     // do something before request is sent
-    console.log(TAG + 'service.interceptors.request.use() ---> config:' + JSON.stringify(config))
+    // console.log(TAG + 'service.interceptors.request.use() ---> config:' + JSON.stringify(config))
     if (store.getters.token) {
       // let each request carry token
       // ['X-Token'] is a custom headers key
@@ -46,10 +46,10 @@ service.interceptors.response.use(
    * You can also judge the status by HTTP Status Code
    */
   response => {
-    console.log(TAG + 'service.interceptors.response.use() ---> response:' + JSON.stringify(response))
+    // console.log(TAG + 'service.interceptors.response.use() ---> response:' + JSON.stringify(response))
     const res = response.data
 
-    console.log(TAG + 'service.interceptors.response.use() ---> res.statusCode:' + res.statusCode)
+    // console.log(TAG + 'service.interceptors.response.use() ---> res.statusCode:' + res.statusCode)
     // if the custom statusCode is not 20000, it is judged as an error.
     if (res.statusCode !== 20000) {
       Message({
@@ -74,7 +74,7 @@ service.interceptors.response.use(
       }
       return Promise.reject(new Error(res.message || 'Error'))
     } else {
-      console.log(TAG + 'service.interceptors.response.use() ---> 操作成功！' + JSON.stringify(res))
+      // console.log(TAG + 'service.interceptors.response.use() ---> 操作成功！' + JSON.stringify(res))
       return res
     }
   },

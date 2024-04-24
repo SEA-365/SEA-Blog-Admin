@@ -1,4 +1,4 @@
-import { login, logout, getInfo } from '@/api/user'
+import {login, logout, getInfo, addUser} from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
@@ -44,6 +44,21 @@ const actions = {
         console.log(TAG + 'login() --> data:' + JSON.stringify(data))
         commit('SET_TOKEN', data.token) // 将token保存到VueX(一个专门用于状态管理的库)
         setToken(data.token) // 将token保存到本地存储
+        resolve() // 表示Promise成功执行
+      }).catch(error => {
+        reject(error) // 表示Promise执行失败
+      })
+    })
+  },
+
+  // user register
+  register({ commit }, userInfo) {
+    console.log(TAG + 'register() --> userInfo:' + JSON.stringify(userInfo))
+    const { username, password, email, phone} = userInfo
+    return new Promise((resolve, reject) => {
+      addUser({ username: username.trim(), password: password, email: email, phone: phone }).then(response => {
+        const { data } = response // 请求后端登录接口成功后返回的响应数据
+        console.log(TAG + 'register() --> data:' + JSON.stringify(data))
         resolve() // 表示Promise成功执行
       }).catch(error => {
         reject(error) // 表示Promise执行失败

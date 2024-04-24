@@ -33,7 +33,15 @@ const TAG = '====sea====>router/index.js====> '
 export const constantRoutes = [
   {
     path: '/login',
+    name: 'Login',
     component: () => import('@/views/login/index'),
+    hidden: true
+  },
+
+  {
+    path: '/register',
+    name: 'Register',
+    component: () => import('@/views/register/index'),
     hidden: true
   },
 
@@ -129,7 +137,7 @@ export const constantRoutes = [
         meta: {title: '标签列表', icon: 'tag_icon'}
       },
       {
-        path: 'add',
+        path: 'introduction',
         name: 'TagIntroduction',
         component: () => import('@/views/tag/introduction.vue'),
         meta: {title: '标签模块介绍', icon: 'add_icon'}

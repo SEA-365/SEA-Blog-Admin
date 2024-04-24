@@ -3,7 +3,7 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">欢迎登录 SEA-Blog Admin</h3>
+        <h3 class="title">欢迎登录 SEA-Blog 管理系统</h3>
       </div>
 
       <el-form-item prop="username">
@@ -63,7 +63,13 @@
         </span>
       </el-form-item>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
+      <div class="register-link">
+        <span>没有账号？</span>
+        <el-link type="primary" :underline="false" @click="handleRegister">立即注册</el-link>
+      </div>
+
+
+      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px; font-weight: bolder; font-size: 18px" @click.native.prevent="handleLogin">Login</el-button>
 <!--
       <div class="tips">
         <span style="margin-right:20px;">username: admin</span>
@@ -72,12 +78,26 @@
 -->
 
     </el-form>
+
+    <main class="footer">
+      <div class="footer-item">
+        <a target="_blank" rel="noopener noreferrer">
+          <span class="item-text">Contact me: SEA-365 (WeChat ID)</span>
+        </a>
+      </div>
+      <br/>
+
+      <div class="copy-right"><span class="name"> Copyright © 2024  SEA-Blog &nbsp; |  &nbsp;  </span>
+        <a target="_blank" rel="noreferrer" href="https://beian.miit.gov.cn/">京ICP备2024050938号</a>
+      </div>
+    </main>
+
+
   </div>
 </template>
 
 <script>
 import { validUsername } from '@/utils/validate'
-
 export default {
   name: 'Login',
   data() {
@@ -132,6 +152,13 @@ export default {
         this.$refs.password.focus()
       })
     },
+    handleRegister() {
+      const TAG = '=====sea=====>handleRegister()====>'
+      console.log(TAG + " go to register page!")
+
+      this.$router.push('/register')
+
+    },
     handleLogin() {
       const TAG = '=====sea=====>handleLogin()====>'
       this.$refs.loginForm.validate(valid => {
@@ -179,6 +206,17 @@ $cursor: #fff;
   }
 }
 
+.register-link {
+  color: rgba(255,255,255);
+  text-align: right; /* 将内容右对齐 */
+  margin: 10px; /* 添加顶部间距 */
+}
+
+.register-link a {
+  color: rgba(0,164,255);
+  margin-left: 2px; /* 设置超链接之间的间距 */
+}
+
 /* reset element-ui css */
 .login-container {
   .el-input {
@@ -222,6 +260,9 @@ $light_gray:#eee;
   width: 100%;
   background-color: $bg;
   overflow: hidden;
+  background-image: url('../../icons/img/bg.jpg'); /* 设置背景图片 */
+  background-size: cover; /* 图片大小覆盖整个容器 */
+  background-position: center; /* 图片居中显示 */
 
   .login-form {
     position: relative;
@@ -249,6 +290,7 @@ $light_gray:#eee;
     color: $dark_gray;
     vertical-align: middle;
     width: 30px;
+
     display: inline-block;
   }
 
@@ -256,7 +298,7 @@ $light_gray:#eee;
     position: relative;
 
     .title {
-      font-size: 26px;
+      font-size: 46px;
       color: $light_gray;
       margin: 0px auto 40px auto;
       text-align: center;
@@ -273,5 +315,16 @@ $light_gray:#eee;
     cursor: pointer;
     user-select: none;
   }
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  color: #fff; /* 设置文字颜色为白色 */
+  text-align: center; /* 文字居中对齐 */
+  padding: 20px; /* 添加一些内边距 */
+
 }
 </style>

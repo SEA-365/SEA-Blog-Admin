@@ -133,7 +133,7 @@
   </el-card>
 </template>
 <script>
-import { getUserList, getUserById, deleteUserById, updateUser, addUser} from "@/api/user";
+import {addUser, deleteUserById, getUserList, updateUser} from "@/api/user";
 
 const TAG = "====sea====> user/list.vue ====> "
 
