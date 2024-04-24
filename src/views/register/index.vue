@@ -1,119 +1,125 @@
 <template>
-  <div class="register-container">
-    <el-form ref="registerForm" :model="registerForm" :rules="registerRules" class="register-form" auto-complete="on" label-position="left">
+  <div class="full-page">
+    <div class="register-container">
+      <el-form ref="registerForm" :model="registerForm" :rules="registerRules" class="register-form" auto-complete="on" label-position="left">
 
-      <div class="title-container">
-        <h3 class="title">欢迎注册 SEA-Blog Admin</h3>
-      </div>
+        <div class="title-container">
+          <h3 class="title">欢迎注册 SEA-Blog Admin</h3>
+        </div>
 
-      <el-form-item prop="username">
+        <el-form-item prop="username">
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
 
-        <el-input
-          v-model="registerForm.username"
-          placeholder="账号"
-          name="username"
-          type="text"
-          tabindex="1"
-          auto-complete="on"
-        />
-      </el-form-item>
+          <el-input
+            v-model="registerForm.username"
+            placeholder="账号"
+            name="username"
+            type="text"
+            tabindex="1"
+            auto-complete="on"
+          />
+        </el-form-item>
 
-      <el-form-item prop="password">
+        <el-form-item prop="password">
         <span class="svg-container">
           <svg-icon icon-class="password" />
         </span>
-        <el-input
-          :key="passwordType"
-          v-model="registerForm.password"
-          :type="passwordType"
-          placeholder="密码"
-          name="password"
-          tabindex="2"
-          auto-complete="on"
-        />
-        <span class="show-pwd" @click="showPwd">
+          <el-input
+            :key="passwordType"
+            v-model="registerForm.password"
+            :type="passwordType"
+            placeholder="密码"
+            name="password"
+            tabindex="2"
+            auto-complete="on"
+          />
+          <span class="show-pwd" @click="showPwd">
           <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
         </span>
-      </el-form-item>
+        </el-form-item>
 
-      <el-form-item prop="confirmPassword">
+        <el-form-item prop="confirmPassword">
         <span class="svg-container">
           <svg-icon icon-class="password" />
         </span>
-        <el-input
-          :key="passwordType"
-          v-model="registerForm.confirmPassword"
-          :type="passwordType"
-          placeholder="再次输入密码"
-          name="confirmPassword"
-          tabindex="3"
-          auto-complete="on"
-        />
-        <span class="show-pwd" @click="showPwd">
+          <el-input
+            :key="passwordType"
+            v-model="registerForm.confirmPassword"
+            :type="passwordType"
+            placeholder="再次输入密码"
+            name="confirmPassword"
+            tabindex="3"
+            auto-complete="on"
+          />
+          <span class="show-pwd" @click="showPwd">
           <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
         </span>
-      </el-form-item>
+        </el-form-item>
 
-      <el-form-item prop="email">
+        <el-form-item prop="email">
         <span class="svg-container">
           <svg-icon icon-class="email" />
         </span>
 
-        <el-input
-          v-model="registerForm.email"
-          placeholder="邮箱"
-          name="email"
-          type="text"
-          tabindex="4"
-          auto-complete="on"
-        />
-      </el-form-item>
+          <el-input
+            v-model="registerForm.email"
+            placeholder="邮箱"
+            name="email"
+            type="text"
+            tabindex="4"
+            auto-complete="on"
+          />
+        </el-form-item>
 
 
-      <el-form-item prop="phone">
+        <el-form-item prop="phone">
         <span class="svg-container">
           <svg-icon icon-class="phone" />
         </span>
 
-        <el-input
-          v-model="registerForm.phone"
-          placeholder="手机号码"
-          name="phone"
-          type="text"
-          tabindex="5"
-          auto-complete="on"
-        />
-      </el-form-item>
+          <el-input
+            v-model="registerForm.phone"
+            placeholder="手机号码"
+            name="phone"
+            type="text"
+            tabindex="5"
+            auto-complete="on"
+          />
+        </el-form-item>
 
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px; font-weight: bolder; font-size: 18px" @click.native.prevent="handleRegister">Register</el-button>
-<!--
-      <div class="tips">
-        <span style="margin-right:20px;">username: admin</span>
-        <span> password: any</span>
-      </div>
--->
+        <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px; font-weight: bolder; font-size: 18px" @click.native.prevent="handleRegister">Register</el-button>
+        <!--
+              <div class="tips">
+                <span style="margin-right:20px;">username: admin</span>
+                <span> password: any</span>
+              </div>
+        -->
 
-    </el-form>
+      </el-form>
 
-    <main class="footer">
+    </div>
+
+    <footer class="footer" style="text-align: center;">
+
       <div class="footer-item">
         <a target="_blank" rel="noopener noreferrer">
           <span class="item-text">Contact me: SEA-365 (WeChat ID)</span>
         </a>
       </div>
+
       <br/>
 
       <div class="copy-right"><span class="name"> Copyright © 2024  SEA-Blog &nbsp; |  &nbsp;  </span>
         <a target="_blank" rel="noreferrer" href="https://beian.miit.gov.cn/">京ICP备2024050938号</a>
       </div>
-    </main>
 
-
+    </footer>
   </div>
+
+
 </template>
 
 <script>
@@ -315,9 +321,16 @@ $bg:#2d3a4b;
 $dark_gray: #a5b4bd;
 $light_gray:#eee;
 
+.full-page {
+  min-height: 100vh; /* 最小高度占满视口 */
+  display: flex;
+  flex-direction: column;
+}
+
 .register-container {
-  min-height: 100%;
-  width: 100%;
+  flex: 1; /* 让登录容器自动填充剩余空间 */
+  padding: 160px 35px 0;
+  box-sizing: border-box;
   background-color: $bg;
   overflow: hidden;
   background-image: url('../../icons/img/bg.jpg'); /* 设置背景图片 */
@@ -378,13 +391,14 @@ $light_gray:#eee;
 }
 
 .footer {
-  position: fixed;
   left: 0;
-  bottom: 0;
+  right: 0;
   width: 100%;
-  color: #fff; /* 设置文字颜色为白色 */
-  text-align: center; /* 文字居中对齐 */
-  padding: 20px; /* 添加一些内边距 */
-
+  background-color: #283443;
+  color: #fff;
+  padding: 20px;
+  overflow-y: auto; /* 允许垂直滚动 */
+  box-sizing: border-box; /* 包含 padding 在内的盒子模型 */
 }
+
 </style>

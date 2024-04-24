@@ -1,99 +1,103 @@
 <template>
-  <div class="login-container">
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
+  <div class="full-page">
+    <div class="login-container">
+      <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
-      <div class="title-container">
-        <h3 class="title">欢迎登录 SEA-Blog 管理系统</h3>
-      </div>
+        <div class="title-container">
+          <h3 class="title">欢迎登录 SEA-Blog 管理系统</h3>
+        </div>
 
-      <el-form-item prop="username">
+        <el-form-item prop="username">
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
-<!--
-         <el-input
-          ref="username"
-          v-model="loginForm.username"
-          placeholder="Username"
-          name="username"
-          type="text"
-          tabindex="1"
-          auto-complete="on"
-        />
--->
-        <el-input
-          v-model="loginForm.username"
-          placeholder="账号"
-          name="username"
-          type="text"
-          tabindex="1"
-          auto-complete="on"
-        />
-      </el-form-item>
+          <!--
+                   <el-input
+                    ref="username"
+                    v-model="loginForm.username"
+                    placeholder="Username"
+                    name="username"
+                    type="text"
+                    tabindex="1"
+                    auto-complete="on"
+                  />
+          -->
+          <el-input
+            v-model="loginForm.username"
+            placeholder="账号"
+            name="username"
+            type="text"
+            tabindex="1"
+            auto-complete="on"
+          />
+        </el-form-item>
 
-      <el-form-item prop="password">
+        <el-form-item prop="password">
         <span class="svg-container">
           <svg-icon icon-class="password" />
         </span>
-<!--
-        <el-input
-          :key="passwordType"
-          ref="password"
-          v-model="loginForm.password"
-          :type="passwordType"
-          placeholder="Password"
-          name="password"
-          tabindex="2"
-          auto-complete="on"
-          @keyup.enter.native="handleLogin"
-        />
--->
-        <el-input
-          :key="passwordType"
-          v-model="loginForm.password"
-          :type="passwordType"
-          placeholder="密码"
-          name="password"
-          tabindex="2"
-          auto-complete="on"
-          @keyup.enter.native="handleLogin"
-        />
-        <span class="show-pwd" @click="showPwd">
+          <!--
+                  <el-input
+                    :key="passwordType"
+                    ref="password"
+                    v-model="loginForm.password"
+                    :type="passwordType"
+                    placeholder="Password"
+                    name="password"
+                    tabindex="2"
+                    auto-complete="on"
+                    @keyup.enter.native="handleLogin"
+                  />
+          -->
+          <el-input
+            :key="passwordType"
+            v-model="loginForm.password"
+            :type="passwordType"
+            placeholder="密码"
+            name="password"
+            tabindex="2"
+            auto-complete="on"
+            @keyup.enter.native="handleLogin"
+          />
+          <span class="show-pwd" @click="showPwd">
           <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
         </span>
-      </el-form-item>
+        </el-form-item>
 
-      <div class="register-link">
-        <span>没有账号？</span>
-        <el-link type="primary" :underline="false" @click="handleRegister">立即注册</el-link>
-      </div>
+        <div class="register-link">
+          <span>没有账号？</span>
+          <el-link type="primary" :underline="false" @click="handleRegister">立即注册</el-link>
+        </div>
 
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px; font-weight: bolder; font-size: 18px" @click.native.prevent="handleLogin">Login</el-button>
-<!--
-      <div class="tips">
-        <span style="margin-right:20px;">username: admin</span>
-        <span> password: any</span>
-      </div>
--->
+        <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px; font-weight: bolder; font-size: 18px" @click.native.prevent="handleLogin">Login</el-button>
+        <!--
+              <div class="tips">
+                <span style="margin-right:20px;">username: admin</span>
+                <span> password: any</span>
+              </div>
+        -->
 
-    </el-form>
+      </el-form>
+    </div>
 
-    <main class="footer">
+    <footer class="footer" style="text-align: center;">
+
       <div class="footer-item">
         <a target="_blank" rel="noopener noreferrer">
           <span class="item-text">Contact me: SEA-365 (WeChat ID)</span>
         </a>
       </div>
+
       <br/>
 
       <div class="copy-right"><span class="name"> Copyright © 2024  SEA-Blog &nbsp; |  &nbsp;  </span>
         <a target="_blank" rel="noreferrer" href="https://beian.miit.gov.cn/">京ICP备2024050938号</a>
       </div>
-    </main>
 
-
+    </footer>
   </div>
+
 </template>
 
 <script>
@@ -255,9 +259,16 @@ $bg:#2d3a4b;
 $dark_gray:#889aa4;
 $light_gray:#eee;
 
+.full-page {
+  min-height: 100vh; /* 最小高度占满视口 */
+  display: flex;
+  flex-direction: column;
+}
+
 .login-container {
-  min-height: 100%;
-  width: 100%;
+  flex: 1; /* 让登录容器自动填充剩余空间 */
+  padding: 160px 35px 0;
+  box-sizing: border-box;
   background-color: $bg;
   overflow: hidden;
   background-image: url('../../icons/img/bg.jpg'); /* 设置背景图片 */
@@ -318,13 +329,14 @@ $light_gray:#eee;
 }
 
 .footer {
-  position: fixed;
   left: 0;
-  bottom: 0;
+  right: 0;
   width: 100%;
-  color: #fff; /* 设置文字颜色为白色 */
-  text-align: center; /* 文字居中对齐 */
-  padding: 20px; /* 添加一些内边距 */
-
+  background-color: #283443;
+  color: #fff;
+  padding: 20px;
+  overflow-y: auto; /* 允许垂直滚动 */
+  box-sizing: border-box; /* 包含 padding 在内的盒子模型 */
 }
+
 </style>
