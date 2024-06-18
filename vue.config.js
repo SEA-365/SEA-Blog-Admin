@@ -24,7 +24,7 @@ module.exports = {
    * In most cases please use '/' !!!
    * Detail: https://cli.vuejs.org/config/#publicpath
    */
-  publicPath: '/',
+  publicPath: './',
   outputDir: 'dist', // 项目打包后的输出目录
   assetsDir: 'static', // 静态资源输出目录
   lintOnSave: process.env.NODE_ENV === 'development', // 是否在开发环境下启动ESLint检查

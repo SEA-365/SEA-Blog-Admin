@@ -114,7 +114,12 @@
 
       <el-table-column align="center" label="文章内容">
         <template slot-scope="scope">
-          <span>{{ scope.row.content}}</span>
+          <span
+            :title="scope.row.content"
+            class="content-truncate"
+          >
+      {{ truncatedContent(scope.row.content) }}
+    </span>
         </template>
       </el-table-column>
 
@@ -299,6 +304,10 @@ export default {
     }
   },
   methods: {
+    truncatedContent: function(content) {
+      return content.length > 50 ? content.slice(0, 50) + '...' : content;
+    },
+
     articleList(){
       this.listLoading = true;
       this.listQuery.title = this.title;
@@ -412,6 +421,20 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
+.content-truncate {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.content-truncate:hover {
+  overflow: visible;
+  white-space: normal;
+  display: inline-block;
+  width: 100%;
+}
+
 .pagination-container {
   float: right;
   margin-top: 1.25rem;
